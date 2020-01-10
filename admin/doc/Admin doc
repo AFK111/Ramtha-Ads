@@ -1,0 +1,51 @@
+
+
+
+/***********Start variables***********/
+
+-- [noNavbar variable]: we make this variable to distinct the pages that mustn't contain navbar.
+-- [pageTitle variable]: we use it to determine the title of the page by getTitle function.
+
+
+/***********End variables***********/
+
+
+
+
+/***********Start functions***********/
+
+
+-- [getTitle function] : this function gives the page title accroding to pageTitle variable or default title .
+
+-- [checkItem function] : this function will check if specific item exist in the DB or not .
+	(return 0 if not exist or number of times frequented if exist)
+
+-- [redirectHome function] : this function show a message you send to it as a parameter over time you determine by another parameter .
+
+-- [countItems function] : this function to count specific item in specific table .
+
+-- [getLatest function] : this function to get the latest number of items from specifi table .
+
+/***********End functions***********/
+
+
+
+/***********Start important notes***********/
+
+-- if the user don't allow to use cookies , that will cause a problem with the our website because the value
+	of 'session.use_trans_sid' var in 'php.ini' file is equal to 0 and that means the session ID(session info)
+	 won't move from one page to another automatically , and we havn't move it manually . 
+
+	 so either prevent the user who don't want to use cookie to use our website or 
+	 move the session ID manually or , or change the value of 'session.use_trans_sid'
+	 to 1 to move it automatically(this way has some drawbacks). 
+
+
+-- any thing snet or modify http headers must be used before html output and if that happens the error 'headers sent' will appear .
+	
+	there are many reasons to cause this problem , to avoid it use ob_start() and ob_end() functions at the start and the end of
+	the page like in dashboard .
+
+	ob : output buffering .
+
+/***********End important notes***********/

@@ -1,0 +1,314 @@
+ /*Start main rules*/
+/*main-color : #3437BC*/
+body {
+	background-color: #F4F4F4;
+	font-size: 16px;
+}
+
+/*End main rules*/
+
+
+
+/*Start login form */
+
+div img{
+	height: 200px;
+	width: 200px;
+    display: inline-block;
+    float: left;
+    /*margin: 120px auto auto auto;*/
+
+    position: absolute;
+	top: 150px;
+	bottom: 0;
+	left: -500px;
+	right: 0;
+	margin:0px auto auto auto;
+	
+	
+}
+
+.login{
+	width: 350px;
+	/*margin: 100px auto auto 10px;*/
+	display: inline-block;
+	float: left;
+
+	position: absolute;
+	top: 250px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin:-120px auto auto auto;
+}
+
+.login h3{
+	color:#3437BC;
+}
+
+
+
+.login input{
+	margin-bottom: 10px;
+}
+
+.login .form-control{
+	background-color: #F4F4F4;
+}
+
+.login .btn{
+	background-color:#3437BC;
+}
+
+
+/*End login form */
+
+/*Start bootstrap edits */
+
+
+	/* Start navbar edits*/
+
+.navbar{
+	border-radius: 0px;
+	margin-bottom: 0px;
+	background-color: #3437BC;
+	border-color: #3437BC;
+
+}
+
+
+.nav>li>a , .navbar-brand{
+	padding:15px 12px;
+}
+
+ .navbar-inverse .navbar-nav>li>a{
+	color:#DDDDDD;
+}
+
+
+.navbar-inverse .navbar-nav>.open>a,
+ .navbar-inverse .navbar-nav>.open>a:focus,
+  .navbar-inverse .navbar-nav>.open>a:hover {
+    
+    background-color: #3437BC;
+    box-shadow: 0 0 20px 0px #343777;
+}
+
+.dropdown-menu{
+	background: #fff;
+	min-width: 200px;
+	padding: 0;
+	font-size: 1em;  /*1em means one time of its parent*/
+	margin: 2px -126px 0px;	
+}
+
+.dropdown-menu>li>a{
+	color:#3437BC;
+	font-weight: 700px;
+	padding: 10px;
+
+}
+	/*End navbar edits*/
+
+	/*Start members page*/
+.form-control{
+	position: relative;
+}
+	/*End members page*/
+
+/*End bootstrap edits */
+
+
+/*Start Dashboard page*/
+
+.home-stats .stat{
+	padding: 20px;
+	font-size: 15px;
+	color: #FFF;
+	border-radius: 10px;
+	font-family: 'Courier Prime', monospace;
+}
+
+.home-stats .stat a{
+	color: #FFF;
+}
+
+.home-stats .stat a:hover{
+	text-decoration: none;
+}
+
+.home-stats .stat a:focus{
+	text-decoration: none;
+}
+
+.home-stats .stat span{
+	display: block;
+	font-size: 60px;
+}
+
+.home-stats .st-members{
+	background-color: #8e44ad;
+}
+
+.home-stats .st-pending{
+	background-color: #1abc9c;
+}
+
+.home-stats .st-items{
+	background-color: #c0392b;
+}
+
+.home-stats .st-comments{
+	background-color: #2c3e50;
+}
+
+
+.latest{
+	margin-top: 30px;
+}
+
+.latest-users{
+	margin-bottom: 0;
+}
+
+.latest-users li{
+	padding: 5px;
+	overflow: hidden;
+}
+
+.latest-users li:nth-child(odd){
+	background-color: #EEE;
+}
+.latest-users li span{
+	color : darkred;
+}
+
+
+.latest-users .btn-success{
+	padding: 2px 10px;
+}
+
+
+/*End Dashboard page*/
+
+
+
+
+/*Start members page */
+
+h1{
+	font-size: 55px;
+	margin: 40px 0;
+	font-weight: bold;
+}
+.btn-primary{
+	background:#3437BC;
+}
+
+.asterisk{
+	font-size: 20px;
+	position: absolute;
+	right: 20px;
+	top:1px;
+	color: #3437BC;
+
+}
+
+.show-pass{
+	position: absolute;
+	top:0px;
+	right: -20px;
+}
+.main-table{
+	-webkit-box-shadow: 0 3px 12px #DDD;
+	-moz-box-shadow: 0 3px 12px #DDD;
+	box-shadow: 0 3px 12px #DDD;
+	
+}
+.main-table td{
+	background-color: #FFF;
+	vertical-align: middle !important;
+}
+
+.main-table tr:first-child td{   /*you can use <th> instead of <tr> at the first of the table*/
+	background-color: #3437BC; 
+	color: #FFF;
+	
+}
+
+.main-table .btn{
+	padding: 3px 10px;
+}
+
+.btn-add{	
+	background-color: Black;
+	color:#3437BC;
+	font-weight: bold;
+}
+
+.btn-activate{
+	margin-left: 5px;
+	background-color: #1abc9c;
+	border: 0;
+}
+/*End members page */
+
+
+/*Start category page */
+
+.categories .panel-body{
+	padding: 0;
+}
+
+.categories .cat{
+	padding: 15px;
+	position: relative;
+	overflow: hidden;
+}
+
+.categories .cat:hover{
+	background-color: #EEE;
+}
+
+.categories .cat:hover .hidden-buttons{
+	right:10px;
+}
+
+.categories .cat .hidden-buttons{
+	-webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+	
+	position: absolute;
+	bottom:10px;
+	right: -120px;
+}
+
+.categories .cat .hidden-buttons a{
+	margin-right: 5px;
+}
+
+.categories hr{
+	margin : 0px;
+}
+
+.categories .cat h3{
+	margin : 0 0 10px;
+}
+
+.categories .cat:last-of-type ~ hr{
+	display: none;
+}
+
+.categories .cat .visibility ,
+.categories .cat .commenting ,
+.categories .cat .ads{
+	color: #FFF;
+	background-color: black;
+	padding: 5px 10px;
+	margin-right: 10px;
+	border-radius: 8px;
+
+}
+
+/*End category page */
