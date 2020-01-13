@@ -3,6 +3,7 @@
 body {
 	background-color: #F4F4F4;
 	font-size: 16px;
+		
 }
 
 /*End main rules*/
@@ -244,6 +245,7 @@ h1{
 	background-color: Black;
 	color:#3437BC;
 	font-weight: bold;
+	margin-bottom: 30px;
 }
 
 .btn-activate{
@@ -255,6 +257,23 @@ h1{
 
 
 /*Start category page */
+
+.categories .option a{
+	color:#999;
+	text-decoration: none;
+
+}
+
+.categories .option span{
+	color:#999;
+	cursor: pointer;
+}
+
+.categories .option .active{
+	color:#0F0;
+	text-decoration: none;
+	
+}
 
 .categories .panel-body{
 	padding: 0;
@@ -293,7 +312,15 @@ h1{
 }
 
 .categories .cat h3{
-	margin : 0 0 10px;
+	margin : 0px;
+	cursor: pointer;
+	font-weight: bold;
+	color: #6A6A6A;
+}
+
+.categories .cat .full-view p{
+	margin-top: 10px;
+	font-weight: bold;
 }
 
 .categories .cat:last-of-type ~ hr{

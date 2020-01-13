@@ -38,7 +38,7 @@
 			</div>
 			<form class="login" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 				
-				<h3 class="text-center">Admin Login</h3>
+				<h3 class="text-center"><?php echo lang("ADMIN_LOGIN"); ?> </h3>
 				<input class="form-control input-lg" type="text" name="user" placeholder="Userrname" autocomplete="off" />
 				<input class="form-control input-lg" type="password" name="pass" placeholder="Password" autocomplete="new-password" />
 				<input class="btn btn-primary btn-block btn-lg" type="submit" value="Login">

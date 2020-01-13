@@ -3,6 +3,8 @@
 	function lang( $phrase ){
 		static $lang = array(
 
+			'ADMIN_LOGIN' 		=>'Admin Login',
+
 			//Navbar links
 
 			'CLUBNAME' 			=> 'Ramtha',
@@ -93,7 +95,9 @@
 			'NO_COMMENTING'		=>'No commenting',
 			'NO_ADS'  			=>'No Ads',
 
-
+			'EDIT_CATEGORY'     =>'Edit category',
+			'UPDATE_CATEGORY'	=>'Update category',
+			'DELETE_CATEGORY'	=>'Delete category',
 
 
 

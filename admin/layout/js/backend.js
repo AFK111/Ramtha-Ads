@@ -43,4 +43,23 @@ $(function(){  //document ready code
 		return confirm('Are you sure ?');
 	});
 
+	//Category view option
+
+	$('.categories .cat h3').click(function(){
+
+		$(this).next('.full-view').fadeToggle(100);
+
+	});
+
+	$('.option span').click(function(){
+		$(this).addClass('active').siblings('span').removeClass('active');
+		
+		if($(this).data('view') === 'full')
+			$('.cat .full-view').fadeIn(100);
+		else
+			$('.cat .full-view').fadeOut(100);
+	});
+
+
+
 });
