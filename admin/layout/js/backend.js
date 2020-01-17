@@ -60,6 +60,7 @@ $(function(){  //document ready code
 			$('.cat .full-view').fadeOut(100);
 	});
 
-
+	
+	  
 
 });

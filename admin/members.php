@@ -66,7 +66,7 @@ _____________________________
 							 ?>
 						</table>
 					</div>
-					<a href='members.php?do=Add' class="btn btn-add"><i class="fa fa-plus"></i> Add new member </a>
+					<a href='members.php?do=Add' class="btn btn-add"><i class="fa fa-plus"></i><?php echo lang("ADD_NEW_MEMBER"); ?> </a>
 				</div>	
 
 
@@ -181,7 +181,7 @@ _____________________________
 			
 			
 				
-				if($_SERVER['REQUEST_METHOD'] == 'POST'){  //Check if the user move here when he press on save button in the Edit page
+				if($_SERVER['REQUEST_METHOD'] == 'POST'){  //Check if the user move here when he press on save button in the Add page
 
 					echo "<h1 class='text-center'>".lang("INSERT_MEMBER"). "</h1>";
 						
@@ -274,7 +274,7 @@ _____________________________
 
 			}elseif ($do=='Edit') {	//Edit page  
 
-					//Check if the get request 'user id' is numeric and get the integer value of it and
+					//Check if the get request 'user id' is numeric and get the integer value of it
 					
 					$userid = ( isset($_GET['userid']) && is_numeric($_GET['userid']) ) ? intval($_GET['userid']) : 0 ;
 
@@ -296,7 +296,7 @@ _____________________________
 							
 							<form class="form-horizontal" action="members.php?do=Update" method="POST">
 								<input type="hidden" name="userid" value="<?php echo $userid; ?>"> <!--to pass private data($userid)-->
-								<input type="hidden" name="currentname" value="<?php echo $row['UserName'] ?>"> <!--to pass private data($userid)-->
+								<input type="hidden" name="currentname" value="<?php echo $row['UserName'] ?>"> <!--to pass private data($userName)-->
 								<!--Start username field-->
 								<div class="form-group form-group-lg">
 									<label class="col-sm-2 control-label"><?php echo lang("USERNAME"); ?></label>

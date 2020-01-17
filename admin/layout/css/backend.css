@@ -220,6 +220,11 @@ h1{
 	top:0px;
 	right: -20px;
 }
+
+.btn{
+	margin-top: 2px;
+}
+
 .main-table{
 	-webkit-box-shadow: 0 3px 12px #DDD;
 	-moz-box-shadow: 0 3px 12px #DDD;
@@ -339,3 +344,12 @@ h1{
 }
 
 /*End category page */
+
+
+/*Start item page */
+
+.select-currency{
+	margin-top: 2px;	
+}	
+
+/*End item page */

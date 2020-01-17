@@ -64,7 +64,7 @@
 
 		global $con;
 
-		$stmt2 = $con->prepare("SELECT COUNT($item) FROM users");
+		$stmt2 = $con->prepare("SELECT COUNT($item) FROM $table");
 		$stmt2->execute();
 
 		return $stmt2->fetchColumn();

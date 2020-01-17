@@ -9,14 +9,14 @@
 
 			'CLUBNAME' 			=> 'Ramtha',
 			'CATEGORIES' 		=> 'Categories',
-			'ITEMS'				=>'Items',
-			'MEMBERS'			=>'Members',
-			'STATISTICS'		=>'Statistics',
-			'LOGS'				=>'Logs',
+			'ITEMS'				=> 'Items',
+			'MEMBERS'			=> 'Members',
+			'STATISTICS'		=> 'Statistics',
+			'LOGS'				=> 'Logs',
 			'EDIT PROFILE' 		=> 'Edit Profile',
 			'SETTINGS' 			=> 'Settings',
 			'LOGOUT' 			=> 'Logout',
-			'DEFAULT'       	=>'Default',
+			'DEFAULT'       	=> 'Default',
 
 			//members page
 				
@@ -89,7 +89,8 @@
 			'ERR_DESC_EMPT'   =>'You must describe the category',
  			'ERR_CNAME_LEN'	  =>'Name must be more than 2 characters less than 50 characters',	
  			'ERR_DESC_LEN'    =>'The description must be more than 4 characters and less than 100 characters',
-		
+			'ERR_DEL_C_WITH_I'=>'Sorry! , you can not delete this category because it contains items', 
+
  			'MANAGE_CATEGORIES' => 'Manage categories',
  			'HIDDEN' 			=> 'Hidden',
 			'NO_COMMENTING'		=>'No commenting',
@@ -100,7 +101,45 @@
 			'DELETE_CATEGORY'	=>'Delete category',
 
 
+			//items page
 
+			'ADD_NEW_ITEM'		=>'Add new item',
+			'ADD_ITEM'			=>'Add item',
+			'PLC_HLD_IN'		=>'Item name',
+			'PLC_HLD_DI'		=>'Describe the item',
+			'PRICE'				=>'Price',
+			'PLC_HLD_IP'		=>'Item price',
+			'COUNTRY'			=>'Country',
+			'PLC_HLD_PC'		=>'The country that made the item',
+			'STATUS'			=>'Status',
+			'RATING'			=>'Rating',
+			
+			'INSERT_ITEM'		  =>'Insert item',
+			'ERR_LEN_INAME'		  =>'Item name must be between 2 and 25 characters',
+			'ERR_FORMAT_INAME'	  =>'Item name must start with letter',
+			'ERR_LEN_DESCRIPTION' =>'Item description must be between 10 and 200 characters',
+			'ERR_EMP_PRICE'		  =>'Price can not be empty',
+			'ERR_FORMAT_PRICE'    =>'Price must contain only numbers and decimal separotor like this (0.0)',
+			'ERR_EMP_STATUS'	  =>'You must choose the status of item',
+			'ERR_EMP_CURRENCY'	  =>'You must choose currency',	
+			'ERR_EMP_MEMBER'	  =>'You must choose a member' ,	
+			'ERR_EMP_CATEGORY'	  =>'You must choose a category',	
+
+			'US_DOLLAR'			  =>'US dollar',
+			'JD'				  =>'JD',
+			'NEW'				  =>'New',
+			'ALMOST_NEW'		  =>'Almost new',
+			'USED'				  =>'Used',
+			'NEED_TO_FIX'		  =>'Need to fix',
+
+			'MEMBER'			  =>'Member',
+			'CATEGORY'			  =>'Category',	
+			'MANAGE_ITEMS'		  =>'Manage items',	
+			'ADDED_BY'			  =>'Added by',
+
+			'EDIT_ITEM'			  =>'Edit item',
+			'UPDATE_ITEM'		  =>'Update item',
+			'DELETE_ITEM'		  =>'Delete item',	
 		);
 
 		return $lang[$phrase];

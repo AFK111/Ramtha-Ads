@@ -82,7 +82,7 @@ _____________________________
 							 ?>	
 						</div>
 					</div>					
-					<a href="?do=Add" class="btn btn-add"><i class="fa fa-plus"></i> Add new category</a>
+					<a href="?do=Add" class="btn btn-add"><i class="fa fa-plus"></i> <?php echo lang("ADD_NEW_CATEGORY"); ?></a>
 				</div>
 
 
@@ -97,7 +97,14 @@ _____________________________
 							<div class="form-group form-group-lg">
 								<label class="col-sm-2 control-label"><?php echo lang("NAME"); ?></label>
 								<div class="col-sm-10 col-md-4">
-									<input type="text" name="name" class="form-control" value="<?php echo isset($_SESSION['old_data']['name']) ? $_SESSION['old_data']['name'] : '';  unset($_SESSION['old_data']['name']);  ?>"  autocomplete="off" placeholder="<?php echo lang("PLC_HLD_CN"); ?>" required="required">
+									<input 
+									type="text" 
+									name="name" 
+									class="form-control" 
+									value="<?php echo isset($_SESSION['old_data']['name']) ? $_SESSION['old_data']['name'] : '';  unset($_SESSION['old_data']['name']);  ?>"  
+									autocomplete="off" 
+									placeholder="<?php echo lang("PLC_HLD_CN"); ?>" 
+									required="required">
 									<?php 
 										if(isset($_SESSION['errors']['Cname']))
 											echo "<label style='color:red'> *". $_SESSION['errors']['Cname'] . " </label>" ;
@@ -222,7 +229,7 @@ _____________________________
 		    <?php		
 			}elseif ($do == 'Insert'){  //Insert  page
 			
-				if($_SERVER['REQUEST_METHOD'] == 'POST'){  //Check if the user move here when he press on save button in the Edit page
+				if($_SERVER['REQUEST_METHOD'] == 'POST'){  //Check if the user move here when he press on save button in the Add page
 
 					echo "<h1 class='text-center'>".lang("INSERT_CATEGORY") ."</h1>";
 						
@@ -539,6 +546,12 @@ _____________________________
 						$check = checkItem("ID" , "categories" , $catid);  
 					
 	 					if($check > 0 ){
+
+	 						$check=checkItem("Cat_ID","items",$catid);  //to check if the category contain items (to prevent to delete it)
+	 						if($check > 0){  //this category contain items
+	 								$theMsg= "<div class='alert alert-danger'>".lang("ERR_DEL_C_WITH_I")."</div>";
+	 								redirectHome($theMsg , "back" , 10);
+	 						}
 
 	 						$stmt = $con->prepare("DELETE FROM categories WHERE ID= :zcategory");
 	 						$stmt->bindParam(":zcategory",$catid);
