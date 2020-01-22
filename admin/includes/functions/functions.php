@@ -79,11 +79,11 @@
 	** $limit = number of records to get
 	*/
 
-	function getLatest($select , $from , $order , $limit = 5){
+	function getLatest($select , $from , $order , $limit = 5,$RegStatus){
 
 		global $con;
 		
-		$getStmt = $con->prepare("SELECT $select FROM $from WHERE RegStatus = 1 ORDER BY $order DESC  LIMIT $limit ");
+		$getStmt = $con->prepare("SELECT $select FROM $from WHERE $RegStatus = 1 ORDER BY $order DESC  LIMIT $limit ");
 		$getStmt->execute();
 		$rows = $getStmt->fetchAll();
 

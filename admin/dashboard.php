@@ -9,8 +9,8 @@
 
 		/* Start Dashboard page*/
 
-		$theLatest = getLatest("*","users","UserID",5);  // get the last five users registered to print them in the panel body below 
-		
+		$theLatestU = getLatest("*","users","UserID",5   ,"RegStatus");  // get the last five users registered to print them in the panel body below 
+		$theLatestI=  getLatest("*","items","Item_ID",5 ,"Approve"); //get the last five items registered to print them in the panel body below		
 ?>
 			
 		<div class="container home-stats text-center">
@@ -20,31 +20,41 @@
 
 				<div class="col-md-3">
 					<div class="stat st-members">
-						Total members
-						<span > <a href="members.php"> <?php echo countItems("UserID","users"); ?>  </a> </span>
+						<i class="fa fa-users"></i>	
+						<div class="info">
+							<?php echo lang("TOTAL_MEMBERS"); ?>
+							<span > <a href="members.php"> <?php echo countItems("UserID","users"); ?>  </a> </span>
+						</div>
 					</div>
 				</div>		
 
 				<div class="col-md-3">
 					<div class="stat st-pending">
-						Pending members
-						<span> <a href="members.php?do=Manage&page=Pending">
-							<?php echo checkItem("RegStatus" , "users" , 0); ?>
-						</a> </span>
+						<i class="fa fa-user-plus"></i>
+						<div class="info">
+							<?php echo lang("PENDING_MEMBERS"); ?>
+							<span> <a href="members.php?do=Manage&page=Pending"><?php echo checkItem("RegStatus" , "users" ,0); ?></a> </span>
+						</div>
 					</div>
 				</div>
 
 				<div class="col-md-3">
 					<div class="stat st-items">
-						Total items
+						<i class="fa fa-tag"></i>
+						<div class="info">
+							<?php echo lang("TOTAL_ITEMS"); ?>
 						<span><a href="items.php">	<?php echo countItems("Item_ID" , "items"); ?> </a></span>
+						</div>
 					</div>
 				</div>
 
 				<div class="col-md-3">
 					<div class="stat st-comments">
-						Total comments
-						<span>200</span>
+						<i class="fa fa-comment"></i>
+						<div class="info">
+							<?php echo lang("TOTAL_COMMENTS"); ?>
+							<span>0</span>
+						</div>
 					</div>
 				</div>
 
@@ -60,17 +70,20 @@
 					<div class="panel panel-default">
 					
 						<div class="panel-heading">
-							<i class="fa fa-users" style="color:#3437BC;"></i> Latest registered users
+							<i class="fa fa-users" style="color:#3437BC;"></i> <?php echo lang("LATEST_USERS"); ?>
+							<span class="toggle-info pull-right">
+								<i class="fa fa-minus fa-lg"></i>
+							</span>
 						</div>
 						<div class="panel-body">
 							
 							<ul class="list-unstyled latest-users" >	
 								<?php 
-										foreach ($theLatest as  $row) {
+										foreach ($theLatestU as  $row) {
 											echo "<li>" ;
 												echo "<b>" . $row['UserName']  . "</b>";
 												echo "<a href='members.php?do=Edit&userid=" . $row['UserID'] . "'>";
-										 		echo "<span class='pull-right'> <i class='fa fa-edit'></i> Edit </span>";
+										 		echo "<span class='pull-right'> <i class='fa fa-edit'></i> ". lang("EDIT") ." </span>";
 										 		echo "</a>";
 										 	echo "</li>";				
 										 }	
@@ -84,12 +97,27 @@
 					<div class="panel panel-default">
 					
 						<div class="panel-heading">
-							<i class="fa fa-tag" style="color:#3437BC;"></i> Latest items
+							<i class="fa fa-tag" style="color:#3437BC;"></i> <?php echo lang("LATEST_ITEMS"); ?>
+							<span class="toggle-info pull-right">
+								<i class="fa fa-minus fa-lg"></i>
+							</span>
 						</div>
 						<div class="panel-body">
-							Test
+							<ul class="list-unstyled latest-users" >	
+								<?php 
+										foreach ($theLatestI as  $row) {
+											echo "<li>" ;
+												echo "<b>" . $row['Name']  . "</b>";
+												echo "<a href='items.php?do=Edit&itemid=" . $row['Item_ID'] . "'>";
+										 		echo "<span class='pull-right'> <i class='fa fa-edit'></i> ". lang("EDIT") ." </span>";
+										 		echo "</a>";
+										 	echo "</li>";				
+										 }	
+								 ?>
+						    </ul>
 						</div>
 					</div>		
+
 				</div>
 			
 			</div>

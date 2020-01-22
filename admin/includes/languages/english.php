@@ -11,12 +11,22 @@
 			'CATEGORIES' 		=> 'Categories',
 			'ITEMS'				=> 'Items',
 			'MEMBERS'			=> 'Members',
+			'COMMENTS'			=>'Comments',
 			'STATISTICS'		=> 'Statistics',
 			'LOGS'				=> 'Logs',
 			'EDIT PROFILE' 		=> 'Edit Profile',
 			'SETTINGS' 			=> 'Settings',
 			'LOGOUT' 			=> 'Logout',
 			'DEFAULT'       	=> 'Default',
+
+			//dashboard page
+			'TOTAL_MEMBERS'		=>'Total members',
+			'PENDING_MEMBERS'	=>'Pending members',
+			'TOTAL_ITEMS'		=>'Total items',
+			'TOTAL_COMMENTS'	=>'Total comments',
+			'LATEST_USERS'		=>'Latest users',
+			'LATEST_ITEMS'		=>'Latest items',
+
 
 			//members page
 				
@@ -115,11 +125,11 @@
 			'RATING'			=>'Rating',
 			
 			'INSERT_ITEM'		  =>'Insert item',
-			'ERR_LEN_INAME'		  =>'Item name must be between 2 and 25 characters',
+			'ERR_LEN_INAME'		  =>'Item name must be between 2 and 14 characters',
 			'ERR_FORMAT_INAME'	  =>'Item name must start with letter',
 			'ERR_LEN_DESCRIPTION' =>'Item description must be between 10 and 200 characters',
 			'ERR_EMP_PRICE'		  =>'Price can not be empty',
-			'ERR_FORMAT_PRICE'    =>'Price must contain only numbers and decimal separotor like this (0.0)',
+			'ERR_FORMAT_PRICE'    =>'Price must contain only numbers and decimal separotor like this (10 digits at most . 2 digit at most)',
 			'ERR_EMP_STATUS'	  =>'You must choose the status of item',
 			'ERR_EMP_CURRENCY'	  =>'You must choose currency',	
 			'ERR_EMP_MEMBER'	  =>'You must choose a member' ,	
@@ -140,6 +150,22 @@
 			'EDIT_ITEM'			  =>'Edit item',
 			'UPDATE_ITEM'		  =>'Update item',
 			'DELETE_ITEM'		  =>'Delete item',	
+			'APPROVE'			  =>'Approve',
+			'APPROVE_ITEM'		  =>'Approve item',
+
+			//comments page
+
+			'MANAGE_COMMENTS'	  =>'Manage comments',	
+			'ITEM_NAME'			  =>'Item Name',
+			'EDIT_COMMENT'		  =>'Edit comment',	
+			'COMMENT'			  =>'Comment',
+			'UPDATE_COMMENT'	  =>'Update comment',
+			'EMP_COMMENT'		  =>'Comment can not be empty',	
+			'DELETE_COMMENT'	  =>'Delete comment',
+			'APPROVE_COMMENT'	  =>'Approve comment',		
+			'SHOW_COMMENTS'		  =>'Show comments',				
+
+
 		);
 
 		return $lang[$phrase];

@@ -2,6 +2,19 @@ $(function(){  //document ready code
 
 	'use strict';
 
+	// Dashboard
+
+	$('.toggle-info').click(function(){
+
+		$(this).toggleClass('selected').parent().next('.panel-body').fadeToggle(100);
+
+		( $(this).hasClass('selected') ) ? $(this).html('<i class="fa fa-plus fa-lg"></i>') : $(this).html('<i class="fa fa-minus fa-lg"></i>');
+
+
+	
+
+	});
+
 	//Hide placeholder on form focus
 
 	$('[placeholder]').focus(function(){

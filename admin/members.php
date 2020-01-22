@@ -558,7 +558,7 @@ _____________________________
 						}else{
 							
 
-							$errMsg= "<div class='alert alert-danger'>This ID is not exist</div>";
+							$errMsg= "<div class='alert alert-danger'>".lang("MSG_ERR_NO_ID")."</div>";
 							echo "<h1 class='text-center'></h1>";
 							echo "<div class='container'>";
 

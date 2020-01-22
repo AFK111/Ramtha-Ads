@@ -34,7 +34,7 @@
 ?>			
 
 			<div>
-				<img src="layout/images/HiLogo.png" class="image-center img-fluid" alt="HiLogo">
+				<img src="layout/images/HiLogo.png" class="image-center img-fluid img-login" alt="HiLogo">
 			</div>
 			<form class="login" action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 				

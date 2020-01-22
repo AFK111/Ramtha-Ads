@@ -12,7 +12,7 @@ body {
 
 /*Start login form */
 
-div img{
+div .img-login{
 	height: 200px;
 	width: 200px;
     display: inline-block;
@@ -117,6 +117,89 @@ div img{
 }
 	/*End members page*/
 
+
+	/*Start bootstap 4 CARD*/
+
+.card {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+
+  /*mine*/
+  margin:40px 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card:hover {
+
+	text-shadow: 2px 2px blue;			
+}
+
+.card-header {
+  padding: 1.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+  /*mine*/
+  background-color: black !important;
+  color: #f6f8f9 !important;
+  font-size: 18px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;	 
+}
+
+
+.card-img-top {
+  width: 100%;
+  border-top-left-radius: calc(0.25rem - 1px);
+  border-top-right-radius: calc(0.25rem - 1px);
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+
+  /*mine*/
+  background:black;
+  color:white;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.card-body .btn:hover{
+	background-color: darkviolet;
+	border-color:violet;
+}
+
+.card-body .btn{
+	background-color: black;
+	
+}
+
+.card-title {
+  margin-bottom: 0.75rem;
+}
+
+.card-text:last-child {
+  margin-bottom: 0;
+}
+
+
+
+	/*End bootstap 4 CARD*/
+
+
 /*End bootstrap edits */
 
 
@@ -128,6 +211,19 @@ div img{
 	color: #FFF;
 	border-radius: 10px;
 	font-family: 'Courier Prime', monospace;
+	position: relative;
+	overflow: hidden;
+}
+
+.home-stats .stat i{
+	font-size: 80px;
+	position: absolute;
+	top:35px;
+	left:40px;
+}
+
+.home-stats .stat .info{
+	float : right;
 }
 
 .home-stats .stat a{
@@ -168,9 +264,21 @@ div img{
 	margin-top: 30px;
 }
 
+.latest .toggle-info{
+	color: #999;
+	cursor: pointer;
+}
+
+.latest .toggle-info:hover{
+	color: #3437BC;
+	
+	
+}
+
 .latest-users{
 	margin-bottom: 0;
 }
+
 
 .latest-users li{
 	padding: 5px;
@@ -348,8 +456,56 @@ h1{
 
 /*Start item page */
 
+.view-item-btn{
+	margin-right: 310px;
+	margin-top: -40px;
+
+}
+
+.view-item-btn .btn{
+	background:black;
+	font-weight: bold;
+
+}
+
 .select-currency{
 	margin-top: 2px;	
 }	
 
 /*End item page */
+
+/*Start comment page*/
+.panel-comment{
+	margin-top: 0;
+	margin-bottom:2px;
+}
+.panel-body-comment{
+	position: relative;
+	overflow:hidden;
+}
+.panel-body-comment:hover{
+	background-color: #AAA;
+}
+
+.panel-body-comment:hover .button-comment{
+	right:10px;
+}
+
+.button-comment{
+
+	-webkit-transition: all .5s ease-in-out;
+	-moz-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+
+	position: absolute;
+	right: -140px;
+	top:5px;
+
+}
+
+.button-comment .btn-ap{
+	background-color: #1abc9c;
+}
+
+
+/*End comment page*/

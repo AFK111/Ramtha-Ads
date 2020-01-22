@@ -18,19 +18,52 @@ _____________________________
 
 			if($do=='Manage'){         //Start manage page 
 
+					
+
 				//Select all items 
 
 				$stmt=$con->prepare("SELECT items.*,categories.Name AS cname,users.UserName AS uname									
 									FROM items										
 									INNER JOIN categories ON categories.ID = items.Cat_ID
-									INNER JOIN users ON users.UserID = items.Member_ID");
+									INNER JOIN users ON users.UserID = items.Member_ID
+									ORDER BY items.Approve DESC");
 				$stmt->execute();	
-
+			
 				//Assign to variable
-				$items=$stmt->fetchAll();
-?>
+				$items=$stmt->fetchAll(); ?>
 
 				<h1 class="text-center"> <?php echo lang("MANAGE_ITEMS"); ?> </h1>
+
+				<div class="pull-right view-item-btn">
+					<a href="?do=Manage" class="btn btn-info"><i class="fa fa-table"></i> Table</a>
+					<a href="?view=cards" class="btn btn-info small"><i class="fa fa-id-card-o"></i> Cards</a>	
+				</div>
+				<?php 
+				if( isset($_GET['view']) && $_GET['view']=='cards'){
+							
+						echo "<div class='container'>";	
+
+						foreach($items as $item){?>
+
+							<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">		
+								<div class="card" style="width: 28rem; ">
+									<div class="card-header"><?php echo $item['cname']; ?></div>
+								  <img class="card-img-top" src="layout/images/noImage.png" alt="Card image cap">
+								  <div class="card-body">
+								    <h3 class="card-title"><?php echo $item['Name']; ?></h3>
+								    <p class="card-text"><?php echo $item['Price'] ." ",$item['Currency']; ?></p>
+								    <a href='comments.php?do=Show&itemid=<?php echo $item['Item_ID']?>' class='btn btn-primary'><i class='fa fa-comment'></i> <?php echo lang("SHOW_COMMENTS") ?> </a>
+								  </div>
+								</div>
+							</div>	
+
+              	<?php    }
+              		echo "</div>";
+				}
+				else {
+?>
+
+				
 				<div class="container">
 					<div class="table-responsive">
 						<table class="main-table text-center table table-bordered">
@@ -49,7 +82,7 @@ _____________________________
 								
 								foreach($items as $item){
 									echo "<tr>";
-										echo "<td>" . $item["Item_ID"] . "</td>";
+										echo "<td>" . $item["Item_ID"] . "<a href='comments.php?do=Show&itemid=".$item['Item_ID']."'><i class='fa fa-comment'></i></a></td>";
 										echo "<td>" . $item["Name"] . "</td>";
 										echo "<td>" . $item["Description"] . "</td>";
 										echo "<td>" . $item["Price"] ." ". $item["Currency"] . "</td>";
@@ -61,7 +94,8 @@ _____________________________
 												<a href='items.php?do=Edit&itemid=" .$item['Item_ID'] . "' class='btn btn-success'><i class='fa fa-edit'></i> ". lang("EDIT") ." </a>
 												<a href='items.php?do=Delete&itemid=" . $item['Item_ID'] . " '  class='btn btn-danger confirm'><i class='fa fa-close'></i> ". lang("DELETE") ." </a>";
 											
-												
+												if($item['Approve'] == 0)
+													echo "<a href='items.php?do=Approve&itemid=". $item['Item_ID']."' class='btn btn-info btn-activate'><i class='fa fa-check-square-o'></i> ". lang("APPROVE")."</a>";
 
 											echo  " </td>";
 									echo "</tr>";
@@ -74,7 +108,7 @@ _____________________________
 				</div>
 				
 
-		<?php   }elseif ($do == "Add"){    //Add  Page ?>
+		<?php }  }elseif ($do == "Add"){    //Add  Page ?>
 				
 				<h1 class="text-center"><?php echo lang("ADD_NEW_ITEM"); ?></h1>
 
@@ -209,7 +243,7 @@ _____________________________
 										<option <?php if( isset($_SESSION['old_data']['member'])  && $_SESSION['old_data']['member']=="0")echo "selected";  ?> value="0">.....</option>
 										<?php 
 
-											$stmt=$con->prepare("SELECT * FROM users");
+											$stmt=$con->prepare("SELECT * FROM users WHERE RegStatus=1");
 											$stmt->execute();
 											$users=$stmt->fetchAll();
 											foreach($users as $user)
@@ -307,7 +341,7 @@ _____________________________
 					$formErorrs=array();
 
 					//iname validation
-					if( strlen($iname)<2 || strlen($iname)>25 )
+					if( strlen($iname)<2 || strlen($iname)>14 )
 						$formErorrs['name_len'] = lang("ERR_LEN_INAME");
 					elseif( !preg_match('/^[a-zA-Z][a-zA-Z0-9\W]+$/', $iname) )
 						$formErorrs['name_f'] = lang("ERR_FORMAT_INAME");		
@@ -319,7 +353,7 @@ _____________________________
 					//price validation
 					if(empty($price))
 						$formErorrs['price'] = lang("ERR_EMP_PRICE");
-					elseif( !preg_match('/^[0-9]{0,19}(\.[0-9]{1,10})?$/', $price) )
+					elseif( !preg_match('/^[0-9]{0,10}(\.[0-9]{1,2})?$/', $price) )
 						$formErorrs['price'] = lang("ERR_FORMAT_PRICE");
 
 					//currency validation
@@ -633,7 +667,7 @@ _____________________________
 					$formErorrs=array();
 
 					//iname validation
-					if( strlen($iname)<2 || strlen($iname)>25 )
+					if( strlen($iname)<2 || strlen($iname)>14 )
 						$formErorrs['name_len'] = lang("ERR_LEN_INAME");
 					elseif( !preg_match('/^[a-zA-Z][a-zA-Z0-9\W]+$/', $iname) )
 						$formErorrs['name_f'] = lang("ERR_FORMAT_INAME");		
@@ -645,7 +679,7 @@ _____________________________
 					//price validation
 					if(empty($price))
 						$formErorrs['price'] = lang("ERR_EMP_PRICE");
-					elseif( !preg_match('/^[0-9]{0,19}(\.[0-9]{1,10})?$/', $price) )
+					elseif( !preg_match('/^[0-9]{0,10}(\.[0-9]{1,2})?$/', $price) )
 						$formErorrs['price'] = lang("ERR_FORMAT_PRICE");
 
 					//country validation:later I will make it listbox
@@ -722,6 +756,39 @@ _____________________________
 
 			}elseif($do == "Approve"){  //Approve  page
 
+				echo '<h1 class="text-center">'. lang("APPROVE_ITEM") .'</h1>';
+
+					echo '<div class="container">';
+
+						//Check if the get request 'item id' is numeric and get the integer value of it 
+						
+						$itemid = ( isset($_GET['itemid']) && is_numeric($_GET['itemid']) ) ? intval($_GET['itemid']) : 0 ;
+
+						//check if the user that will be deleted is exist
+						
+						$check = checkItem("Item_ID" , "items" , $itemid);  
+					
+	 					if($check > 0 ){
+
+	 						$stmt = $con->prepare("UPDATE items SET Approve = 1 WHERE Item_ID=?");
+	 						$stmt->execute( array($itemid) );
+
+	 						$theMsg = "<div class='container'><div class='alert alert-success'>" . $stmt->rowCount() .' '. lang("RECORD_ACTIVATED") .' </div></div>';
+	 						redirectHome($theMsg , "back" ,4);
+
+						}else{
+							
+
+							$errMsg= "<div class='alert alert-danger'>".lang("MSG_ERR_NO_ID")."</div>";
+							echo "<h1 class='text-center'></h1>";
+							echo "<div class='container'>";
+
+							redirectHome($errMsg , null , 4);
+					
+							echo "</div>";
+
+						}
+					echo "</div>";
 
 			}
 
