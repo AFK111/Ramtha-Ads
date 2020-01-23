@@ -19,8 +19,8 @@
         <li ><a href="items.php?view=cards"> <?php echo lang("ITEMS"); ?> </a></li>
         <li ><a href="members.php"> <?php echo lang("MEMBERS"); ?> </a></li>
         <li ><a href="comments.php"> <?php echo lang("COMMENTS"); ?> </a></li>
-        <li ><a href="#"> <?php echo lang("STATISTICS"); ?> </a></li>
-        <li ><a href="#"> <?php echo lang("LOGS"); ?> </a></li>
+        <!-- <li ><a href="#"> <?php //echo lang("STATISTICS"); ?> </a></li>
+        <li ><a href="#"> <?php //echo lang("LOGS"); ?> </a></li> -->
       </ul>
   
       <ul class="nav navbar-nav navbar-right">

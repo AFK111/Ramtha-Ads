@@ -49,11 +49,11 @@
 				</div>
 
 				<div class="col-md-3">
-					<div class="stat st-comments">
-						<i class="fa fa-comment"></i>
+					<div class="stat st-pending-c">
+						<i class="fa fa-plus"></i>
 						<div class="info">
-							<?php echo lang("TOTAL_COMMENTS"); ?>
-							<span>0</span>
+							<?php echo lang("PENDING_ITEMS"); ?>
+							<span> <a href="items.php?do=Manage&page=Pending"><?php echo checkItem("Approve" , "items" ,0); ?></a> </span>
 						</div>
 					</div>
 				</div>

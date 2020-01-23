@@ -22,10 +22,16 @@ _____________________________
 
 				//Select all items 
 
+				$post_query = "";
+				if(isset($_GET['page']) && $_GET['page']=='Pending')
+					$post_query = "WHERE items.Approve = 0";
+
+
 				$stmt=$con->prepare("SELECT items.*,categories.Name AS cname,users.UserName AS uname									
 									FROM items										
 									INNER JOIN categories ON categories.ID = items.Cat_ID
 									INNER JOIN users ON users.UserID = items.Member_ID
+									$post_query
 									ORDER BY items.Approve DESC");
 				$stmt->execute();	
 			
@@ -53,6 +59,9 @@ _____________________________
 								    <h3 class="card-title"><?php echo $item['Name']; ?></h3>
 								    <p class="card-text"><?php echo $item['Price'] ." ",$item['Currency']; ?></p>
 								    <a href='comments.php?do=Show&itemid=<?php echo $item['Item_ID']?>' class='btn btn-primary'><i class='fa fa-comment'></i> <?php echo lang("SHOW_COMMENTS") ?> </a>
+								  	<?php if($item['Approve']==0){ ?>
+							 			<a href='comments.php?do=Approve&itemid=<?php echo $item['Item_ID']?>' class='btn btn-info btn-ap'><i class='fa fa-check-square-o'></i> <?php echo lang("APPROVE") ?> </a>
+								  	<?php } ?>			
 								  </div>
 								</div>
 							</div>	

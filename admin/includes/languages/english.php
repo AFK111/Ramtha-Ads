@@ -26,6 +26,7 @@
 			'TOTAL_COMMENTS'	=>'Total comments',
 			'LATEST_USERS'		=>'Latest users',
 			'LATEST_ITEMS'		=>'Latest items',
+			'PENDING_ITEMS'		=>'Pending items',
 
 
 			//members page
