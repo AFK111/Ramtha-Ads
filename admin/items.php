@@ -26,6 +26,8 @@ _____________________________
 				if(isset($_GET['page']) && $_GET['page']=='Pending')
 					$post_query = "WHERE items.Approve = 0";
 
+				if(isset($_GET['catid']) && $_GET['catid']!=0)
+					$post_query.=" AND items.Cat_ID=".$_GET['catid'];
 
 				$stmt=$con->prepare("SELECT items.*,categories.Name AS cname,users.UserName AS uname									
 									FROM items										
@@ -34,17 +36,60 @@ _____________________________
 									$post_query
 									ORDER BY items.Approve DESC");
 				$stmt->execute();	
-			
-				//Assign to variable
-				$items=$stmt->fetchAll(); ?>
+				$items=$stmt->fetchAll();
 
-				<h1 class="text-center"> <?php echo lang("MANAGE_ITEMS"); ?> </h1>
+				$stmt=$con->prepare("SELECT Name,ID FROM categories");
+				$stmt->execute();
+				$cats=$stmt->fetchAll();
+
+
+				 ?>
+
+				<h1 class="text-center"> <?php echo lang("MANAGE_ITEMS"); ?>
+				 <small><?php if(isset($_GET['page']) && $_GET['page']=='Pending') echo lang("PENDING"); ?></small> 
+				</h1>
 
 				<div class="pull-right view-item-btn">
-					<a href="?do=Manage" class="btn btn-info"><i class="fa fa-table"></i> Table</a>
-					<a href="?view=cards" class="btn btn-info small"><i class="fa fa-id-card-o"></i> Cards</a>	
+					<a href="?do=Manage<?php
+					 if(isset($_GET['catid'])) echo "&catid=".$_GET['catid']; 
+					 if(isset($_GET['page'])) echo "&page=".$_GET['page'];  
+					 ?>"
+					  class="btn btn-info"><i class="fa fa-table"></i> Table
+					</a>
+
+					<a href="?view=cards<?php
+					 if(isset($_GET['catid'])) echo "&catid=".$_GET['catid'];  
+					 if(isset($_GET['page'])) echo "&page=".$_GET['page'];
+					 ?>"
+					   class="btn btn-info small">
+						<i class="fa fa-id-card-o"></i> Cards
+					</a>	
+					
+					<select class="myselect"  onchange="location = this.value;">
+						
+						<?php
+						$pending="";
+						if(isset($_GET['page']) && $_GET['page']=='Pending')
+								$pending="&page=Pending";
+
+						$cards="";
+							if(isset($_GET['view']) && $_GET['view']=='cards')
+								$cards="&view=cards";
+						echo "<option value='items.php?catid=0$cards$pending'>All</option>"; 
+						foreach($cats as $cat){
+							
+							$select="";
+							if(isset($_GET['catid'])&&  $_GET['catid']==$cat['ID'] )
+								$select="selected";
+							echo "<option $select value='items.php?catid=". $cat['ID'] ."$cards$pending'>".$cat['Name'] . "</option>";
+						}
+
+						 ?>
+					</select>
+
 				</div>
 				<?php 
+				if(!empty($items)){
 				if( isset($_GET['view']) && $_GET['view']=='cards'){
 							
 						echo "<div class='container'>";	
@@ -60,7 +105,7 @@ _____________________________
 								    <p class="card-text"><?php echo $item['Price'] ." ",$item['Currency']; ?></p>
 								    <a href='comments.php?do=Show&itemid=<?php echo $item['Item_ID']?>' class='btn btn-primary'><i class='fa fa-comment'></i> <?php echo lang("SHOW_COMMENTS") ?> </a>
 								  	<?php if($item['Approve']==0){ ?>
-							 			<a href='comments.php?do=Approve&itemid=<?php echo $item['Item_ID']?>' class='btn btn-info btn-ap'><i class='fa fa-check-square-o'></i> <?php echo lang("APPROVE") ?> </a>
+							 			<a href='items.php?do=Approve&itemid=<?php echo $item['Item_ID']?>' class='btn btn-info btn-ap'><i class='fa fa-check-square-o'></i> <?php echo lang("APPROVE") ?> </a>
 								  	<?php } ?>			
 								  </div>
 								</div>
@@ -113,11 +158,18 @@ _____________________________
 							 ?>
 						</table>
 					</div>
-					<a href='?do=Add' class='btn btn-add'><i class='fa fa-plus'></i> <?php   echo lang("ADD_NEW_ITEM"); ?> </a>	
-				</div>
+				</div>	
+					<?php 	
+						}
+					}//if(!empty($items))
+					else
+						echo "<div class='container'><div class='nice-message'>".lang("NO_ITEMS")."</div></div>";
+					 ?>
+					<div class="container"><a href='?do=Add' class='btn btn-add'><i class='fa fa-plus'></i> <?php   echo lang("ADD_NEW_ITEM"); ?> </a></div>	
+				
 				
 
-		<?php }  }elseif ($do == "Add"){    //Add  Page ?>
+		<?php  }elseif ($do == "Add"){    //Add  Page ?>
 				
 				<h1 class="text-center"><?php echo lang("ADD_NEW_ITEM"); ?></h1>
 

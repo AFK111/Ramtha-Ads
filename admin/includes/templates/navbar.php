@@ -25,8 +25,9 @@
   
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo strtoupper($_SESSION['Username']); ?> <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['Username']; ?> <span class="caret"></span></a>
           <ul class="dropdown-menu">
+             <li><a href="../index.php" target="_blank"><i class="fa fa-arrow-circle-right"></i> <?php echo lang("VISIT_SHOP"); ?> </a></li>
             <li><a href="members.php?do=Edit&userid=<?php echo $_SESSION['ID']; ?>"> <i class="fa fa-pencil" aria-hidden="true" ></i>  <?php echo lang("EDIT PROFILE"); ?>  </a></li>
             <li><a href="#"> <i class="fa fa-cogs" aria-hidden="true"></i>  <?php echo lang("SETTINGS"); ?> </a></li>
             <li><a href="logout.php"> <i class="fa fa-sign-out" aria-hidden="true"></i>  <?php echo lang("LOGOUT"); ?> </a></li>

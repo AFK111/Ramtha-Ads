@@ -1,0 +1,31 @@
+
+//if there is things we get it from backend , its documentation will be at admin documentation .
+
+/***********Start variables***********/
+
+/***********End variables***********/
+
+
+
+
+/***********Start functions***********/
+-- [getCat function] : this function returns all the categories .
+-- [getItems function] : this function returns all the the items in specific category .
+-- [checkUserStatus function] : this function check if the user is activated or need approval .
+
+
+/***********End functions***********/
+
+
+
+/***********Start important notes***********/
+
+-- the name of the ordinary user and admin in session must be different . because if the user session was the same of the admin session 
+	so when the user open the admin pages then the admin pages will open because when we check the session of the user will be found .
+
+	so the session of the user must not be the same of the admin .
+
+	$_SESSION['username'] --> for admin
+	$_SESSION['user']     --> for user
+
+/***********End important notes***********/

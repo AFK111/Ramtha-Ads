@@ -15,6 +15,7 @@
 			'STATISTICS'		=> 'Statistics',
 			'LOGS'				=> 'Logs',
 			'EDIT PROFILE' 		=> 'Edit Profile',
+			'VISIT_SHOP'		=>'Visit shop',
 			'SETTINGS' 			=> 'Settings',
 			'LOGOUT' 			=> 'Logout',
 			'DEFAULT'       	=> 'Default',
@@ -153,6 +154,8 @@
 			'DELETE_ITEM'		  =>'Delete item',	
 			'APPROVE'			  =>'Approve',
 			'APPROVE_ITEM'		  =>'Approve item',
+			'NO_ITEMS'			  =>'No items to show',	
+			'PENDING'			  =>'Pending',	
 
 			//comments page
 
@@ -165,7 +168,7 @@
 			'DELETE_COMMENT'	  =>'Delete comment',
 			'APPROVE_COMMENT'	  =>'Approve comment',		
 			'SHOW_COMMENTS'		  =>'Show comments',				
-
+			'NO_COMMENT'		  =>'There are No comments yet...',	
 
 		);
 

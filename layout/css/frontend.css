@@ -1,0 +1,199 @@
+ /*Start main rules*/
+/*main-color : #3437BC*/
+body {
+	background-color: #F4F4F4;
+	font-size: 16px;
+	height: 1000px;
+}
+
+h1{
+	font-size: 55px;
+	margin: 40px 0;
+	font-weight: bold;
+}
+
+
+.asterisk{
+	font-size: 20px;
+	position: absolute;
+	right: 20px;
+	top:1px;
+	color: #3437BC;
+
+}
+
+.nice-message{
+	padding: 10px;
+	background-color: #FFF;
+	margin: 10px 0;
+	border-left: 5px solid #080;
+}
+/*End main rules*/
+
+/*Start bootstrap edits */
+
+
+	/* Start navbar edits*/
+
+.navbar{
+	border-radius: 0px;
+	margin-bottom: 0px;
+	background-color: black;
+	border-color: #3437BC;
+
+}
+
+
+.nav>li>a , .navbar-brand{
+	padding:15px 12px;
+}
+
+ .navbar-inverse .navbar-nav>li>a{
+	color:#DDDDDD;
+}
+
+
+.navbar-inverse .navbar-nav>.open>a,
+ .navbar-inverse .navbar-nav>.open>a:focus,
+  .navbar-inverse .navbar-nav>.open>a:hover {
+    
+    background-color: #3437BC;
+    box-shadow: 0 0 20px 0px #343777;
+}
+
+.dropdown-menu{
+	background: #fff;
+	min-width: 200px;
+	padding: 0;
+	font-size: 1em;  /*1em means one time of its parent*/
+	margin: 2px -126px 0px;	
+}
+
+.dropdown-menu>li>a{
+	color:#3437BC;
+	font-weight: 700px;
+	padding: 10px;
+
+}
+	/*End navbar edits*/
+
+
+
+/*End bootstrap edits */
+
+/*Start upper header(navbar)*/
+
+
+.upper-bar{
+	padding: 10px;
+	background-color: black;
+	color: white;
+	font-size: 18px;
+		
+}
+
+/*End upper header(navbar)*/
+
+
+/*Start Login-SignUp page*/
+
+
+.login-page [data-class="login"].selected{
+	color:#337AB7;
+
+}
+
+
+.login-page [data-class="signup"].selected{
+	color:green;
+
+}
+
+.login-page h1{
+	color:#DDD;
+}
+
+.login-page h1 span{
+	cursor:pointer;
+}
+
+.login-page .signup{
+	display: none;
+}
+
+.login-page form{
+	max-width:350px;
+	margin: auto;
+
+}
+
+.login-page form input{
+	margin-bottom: 5px;
+}
+
+.login-page form i{
+	float: right;
+}
+
+.show-pass{
+	position: absolute;
+	top:0px;
+	right: -30px;
+	font-size: 25px;
+	color:blue;
+}
+
+.show-pass:active{
+	font-size: 22px;
+	color:red;
+}
+
+.signup .show-pass{
+	font-size: 25px;
+	color:green;
+}
+
+.signup .show-pass:active{
+	font-size: 22px;
+	color: red;
+}
+
+
+
+/*End Login-SignUp page*/
+
+
+
+/*Start categories page*/
+
+.item-box{
+	position: relative;
+}
+
+.item-box .price-tag{
+	background-color: #B4B4B4;
+	padding: 2px 10px;
+	position: absolute;
+	left: 0px;
+	top: 10px;
+	font-weight: bold;
+	color: #FFF;
+
+
+}
+
+/*End categories page*/
+
+
+/*Start profile page*/
+
+.information{
+	margin: 20px 0 0;
+}
+
+.profile .panel-heading{
+background-color: black;
+
+}
+
+/*End profile page*/

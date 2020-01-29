@@ -30,7 +30,10 @@ _____________________________
 				$rows=$stmt->fetchAll();
 ?>
 
-				<h1 class="text-center"> <?php echo lang("MANAGE_MEMBERS"); ?> </h1>
+				<h1 class="text-center">
+				 <?php echo lang("MANAGE_MEMBERS"); ?> 
+				 <small><?php if(isset($_GET['page']) && $_GET['page']=="Pending") echo lang("PENDING"); ?></small>		 	
+				</h1>
 				<div class="container">
 					<div class="table-responsive">
 						<table class="main-table text-center table table-bordered">
@@ -118,6 +121,7 @@ _____________________________
 									<label class="col-sm-2 control-label"><?php echo lang("REPASSWORD"); ?></label>
 									<div class="col-sm-10 col-md-4">
 										<input type="password" name="repassword" value="<?php echo isset($_SESSION['old_data']['repassword']) ? $_SESSION['old_data']['repassword'] : '';  unset($_SESSION['old_data']['repassword']);  ?>" class="form-control password" autocomplete="new-password" placeholder="<?php echo lang("REWRITE PASSWORD"); ?>" required="required">
+										<i class="show-pass fa fa-eye fa-2x"></i>
 										
 										<?php 
 											if(isset($_SESSION['errors']['repassword']))
@@ -336,7 +340,8 @@ _____________________________
 									<label class="col-sm-2 control-label"><?php echo lang("PASSWORD"); ?></label>
 									<div class="col-sm-10 col-md-4">
 										<input type="hidden" name="oldpassword" value="<?php echo $row['Password'] ?>">
-										<input type="password" name="newpassword" class="form-control" autocomplete="new-password" placeholder="<?php echo lang("NEW PASSWORD"); ?>">
+										<input type="password" name="newpassword" class="form-control password" autocomplete="new-password" placeholder="<?php echo lang("NEW PASSWORD"); ?>">
+										<i class="show-pass fa fa-eye fa-2x"></i>
 										<?php 
 											if(isset($_SESSION['errors']['password']))
 												echo "<label style='color:red'> *". $_SESSION['errors']['password'] . " </label>" ;

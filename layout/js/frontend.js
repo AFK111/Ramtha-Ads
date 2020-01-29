@@ -2,17 +2,13 @@ $(function(){  //document ready code
 
 	'use strict';
 
-	// Dashboard
+	//Switch between login and signup
+	$('.login-page h1 span').click(function(){
 
-	$('.toggle-info').click(function(){
+		$(this).addClass('selected').siblings().removeClass("selected");
 
-		$(this).toggleClass('selected').parent().next('.panel-body').fadeToggle(100);
-
-		( $(this).hasClass('selected') ) ? $(this).html('<i class="fa fa-plus fa-lg"></i>') : $(this).html('<i class="fa fa-minus fa-lg"></i>');
-
-
-	
-
+		$('.login-page form').hide(); //hide all forms in the page
+		$( '.' + $(this).data("class") ).fadeIn(500); //show the form of the span you click on
 	});
 
 	//Hide placeholder on form focus
@@ -48,31 +44,13 @@ $(function(){  //document ready code
 		$(this).prevAll(".password").attr('type','text');
 	});
 	
+	
 	//Confirmation message on Button 
 
 	$('.confirm').click(function(){
 
 		return confirm('Are you sure ?');
 	});
-
-	//Category view option
-
-	$('.categories .cat h3').click(function(){
-
-		$(this).next('.full-view').fadeToggle(100);
-
-	});
-
-	$('.option span').click(function(){
-		$(this).addClass('active').siblings('span').removeClass('active');
-		
-		if($(this).data('view') === 'full')
-			$('.cat .full-view').fadeIn(100);
-		else
-			$('.cat .full-view').fadeOut(100);
-	});
-
-
-	  
+		  
 
 });

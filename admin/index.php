@@ -25,7 +25,7 @@
 
  		if($count>0)
  		{
- 			$_SESSION['Username']=$username; //Register session name
+ 			$_SESSION['Username']=$row['username']; //Register session name(for admin)
  			$_SESSION['ID']= $row['userid']; //Register session ID
  			header('Location:dashboard.php'); //Redirect to dashboard page
  			exit();

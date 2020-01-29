@@ -302,7 +302,7 @@ _____________________________
 					    		foreach($rows as $row){ ?>
 		 							
 		 							<div class="col-md-7 col-sm-10 col-xs-12">
-			 							<div class="panel panel-default panel-comment">
+			 							<div class="panel panel-danger panel-comment">
 											<div class="panel-heading">
 												<i class="fa fa-user" style="color:#3437BC;"></i>
 												<?php echo $row['UName']; ?>
@@ -326,7 +326,7 @@ _____________________________
 		 				  <?php }
 
 		 					}else{
-		 						echo "<h3 class=''>There are No comments yet...</h3>";
+		 						echo "<h3 class=''>".lang("NO_COMMENT")."</h3>";
 		 					}	
 	 						
 
