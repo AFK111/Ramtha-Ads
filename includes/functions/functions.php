@@ -16,16 +16,19 @@
 	}
 
 
-	/*v1.0	
-	** Function to get items from database 
+	/*v2.0	
+	** Function to get Ad items from database 
+	** $approve parameter to determine if you want all items[1] or just approved items[null]
 	*/
 
-	function getItems($catid){
+	function getItems($column , $value , $approve=null){
 
 		global $con;
 		
-		$getItems = $con->prepare("SELECT * FROM items Where Approve=? AND Cat_ID=? ORDER BY Item_ID DESC");
-		$getItems->execute(array(1,$catid));
+		$sql = ($approve==null ? "AND approve = 1" :"" );
+
+		$getItems = $con->prepare("SELECT * FROM items Where $column=? $sql ORDER BY Item_ID,Approve DESC");
+		$getItems->execute(array($value));
 		$items = $getItems->fetchAll();
 
 		return $items;
@@ -63,6 +66,27 @@
 	}
 
 
+
+	/*v1.0
+	** Function to check item in database if exist or not [ This function has parameters ]
+	** $select = the item to select [ Example : userName , item , category ]
+	** $from = the table to select from [ Example : users , items , categories ] 
+	** $where = the value of condition(The value to check) [ Example : osama , box , electornics , 12]
+	*/
+
+	function checkItem($select , $from , $where){
+
+		global $con;                 // we will take this variable when we include this file and include before it 'connect' file that..
+									 //.. contains the $con variable
+		$statement = $con->prepare("SELECT $select FROM $from WHERE $select = ?");
+		$statement->execute(array($where));
+
+		$count = $statement->rowCount();
+
+		return $count;
+	}
+
+
 /*/////////////////////////////////////OLD FUNCTIONS (ADMIN FUNCTIONS)/////////////////////////////////////////////////////////////////////*/
 
 	/*v2.0
@@ -86,26 +110,6 @@
 		exit();
 	}
 
-
-
-	/*v1.0
-	** Function to check item in database if exist or not [ This function has parameters ]
-	** $select = the item to select [ Example : userName , item , category ]
-	** $from = the table to select from [ Example : users , items , categories ] 
-	** $where = the value of condition(The value to check) [ Example : osama , box , electornics , 12]
-	*/
-
-	function checkItem($select , $from , $where){
-
-		global $con;                 // we will take this variable when we include this file and include before it 'connect' file that..
-									 //.. contains the $con variable
-		$statement = $con->prepare("SELECT $select FROM $from WHERE $select = ?");
-		$statement->execute(array($where));
-
-		$count = $statement->rowCount();
-
-		return $count;
-	}
 
 
 	/*v1.0

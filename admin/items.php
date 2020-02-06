@@ -238,7 +238,7 @@ _____________________________
 									 required="required" />
 									 <select name='currency' class="">
 									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="0")echo "selected"; ?> value="0"; >....</option>
-									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="US dollar")echo "selected";  ?> > <?php echo lang("US_DOLLAR"); ?></option>
+									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="$")echo "selected";  ?> > <?php echo lang("US_DOLLAR"); ?></option>
 									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="JD")echo "selected";  ?> ><?php echo lang("JD"); ?></option>
 									 </select>
 									 <?php 
@@ -481,11 +481,11 @@ _____________________________
 			}elseif ($do=='Edit') {	//Edit page  
 
 
-				//Check if the get request 'item id' is numeric and get the integer value of it
+					//Check if the get request 'item id' is numeric and get the integer value of it
 					
 					$itemid = ( isset($_GET['itemid']) && is_numeric($_GET['itemid']) ) ? intval($_GET['itemid']) : 0 ;
 
-					//Select all data depend on the $userid
+					//Select all data depend on the $itemid
 
 					$stmt = $con->prepare("SELECT * FROM items WHERE Item_ID=?");        //prepare before enter to DB (more safe)
  						

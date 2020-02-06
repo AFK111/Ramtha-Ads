@@ -17,7 +17,7 @@ _____________________________
 			if($do=='Manage'){         //Start manage page 
 
 
-				//Select all users except admins
+				//Select all comments
 
 				$stmt=$con->prepare("SELECT comments.* , items.Name AS IName, users.UserName AS UName
 									 FROM comments

@@ -3,7 +3,7 @@
 body {
 	background-color: #F4F4F4;
 	font-size: 16px;
-	height: 1000px;
+	height: 3000px;
 }
 
 h1{
@@ -19,16 +19,37 @@ h1{
 	right: 20px;
 	top:1px;
 	color: #3437BC;
+}
 
+.main-form .asterisk{
+	font-size: 20px;
+	position: absolute;
+	right: 20px;
+	top:1px;
+	color: red;
+}
+
+.signup .asterisk{
+	display: none;
 }
 
 .nice-message{
 	padding: 10px;
-	background-color: #FFF;
-	margin: 10px 0;
-	border-left: 5px solid #080;
+	background-color: #EEE; 	
+	margin: 10px 20px;
+	border-left: 5px solid #800;
 }
 /*End main rules*/
+
+/*Start our custom*/
+
+.custom-hr{
+	border-top: 1px solid #c9c9c9;
+}
+
+/*End our custom*/
+
+
 
 /*Start bootstrap edits */
 
@@ -158,7 +179,16 @@ h1{
 	color: red;
 }
 
-
+.success_reg {
+	background-color: #DDD;
+	border-right:5px solid #050;
+	border-left: 5px solid #050;
+	
+	width: 500px;
+    margin-left: 320px;
+    margin-top: 20px;
+    padding: 1px;
+}
 
 /*End Login-SignUp page*/
 
@@ -182,6 +212,17 @@ h1{
 
 }
 
+
+.item-box .caption p{
+	height: 44px;
+	max-height: 100px;
+	overflow: hidden;
+}
+
+.item-box .caption h3{
+	overflow: hidden;
+}
+
 /*End categories page*/
 
 
@@ -191,9 +232,120 @@ h1{
 	margin: 20px 0 0;
 }
 
+.information ul{
+	padding: 0px;
+	margin: 0px;
+}
+.information ul li{
+	padding: 10px;
+}
+.information ul li:nth-child(odd){
+	background-color: #EEE;
+}
+.information ul li span{
+	display: inline-block;
+	width: 120px;
+}
 .profile .panel-heading{
 background-color: black;
 
 }
+.thumbnail .date{
+	text-align: right;
+	font-size: 13px;
+	color:#AAA;
+	font-weight: bold;
+}
 
+.item-box .approve-status{
+	position: absolute;
+	top: 40px;
+	left:0px;
+	background-color: #b85a5a;
+	columns: #FFF;
+	padding: 3px 5px;
+
+}
 /*End profile page*/
+
+
+/*Start newad page*/
+.create-ad .alert-danger{
+	margin-top: 5px;
+}
+/*End newad page*/
+
+/*Start item page*/
+
+.item-info h2{
+
+	padding: 0px 10px ;
+	margin: 0px;
+}
+
+.item-info p{
+	padding: 10px;
+}
+
+.item-info ul li{
+	padding: 10px;
+}
+
+.item-info ul li:nth-child(odd){
+	background-color: #CCC;
+}
+.item-info ul li span{
+	display: inline-block;
+	width: 120px;
+}
+.item-info ul li .fa-money{
+	color: green;
+}
+
+.hr-item{
+	border-top: 1px solid #c9c9c9;
+}
+
+.add-comment h3{
+	margin: 0 0 10px;
+}
+.add-comment textarea{
+	display: block;
+	margin-bottom: 10px;
+	width: 500px;
+	height: 100px;
+}
+
+.comment-box{
+	margin-bottom: 20px;
+}
+
+.comment-box img{
+	max-width: 100px;
+	margin-bottom: 10px;
+}
+
+.comment-box .lead{
+	background-color: #e0e0e0;
+	position: relative;
+	padding: 10px;
+	height: 120px;
+}
+
+.comment-box .lead:before{
+	content: "";
+	width: 0;
+	height: 0;
+	border-width: 15px;
+	border-style: solid;
+	border-color : transparent #e0e0e0 transparent transparent;
+	position: absolute;
+	left:-30px;
+	top:20px;
+}
+
+
+/*End Item page*/
+
+
+

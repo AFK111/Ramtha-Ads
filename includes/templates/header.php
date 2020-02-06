@@ -21,7 +21,7 @@
   <div class='container'>
     <?php if(isset($_SESSION['user'])){ ?>
         <span class='pull-right'> <a href="profile.php"> <?php echo $_SESSION['user']; ?> </a>| <a href="logout.php" class="btn btn-danger"><?php echo lang("LOGOUT"); ?></a> </span>
-        
+        <span ><a href="newad.php"> <?php echo lang("NEW_AD"); ?> </a></span>
         <?php
             $active= checkUserStatus($_SESSION['user']);   
             if(!$active){
@@ -60,12 +60,10 @@
 
             foreach(getCat() as $cat){
               echo "<li>
-                    <a href='categories.php?pageid=".$cat["ID"]."&pagename=". str_replace("&",".1,1.",$cat['Name']) ."'>"  //we put str replace here to replace the space in the category name with (-) because the space in the link will becom (%20) that will make the link and the cat name ugly.
+                    <a href='categories.php?pageid=" . $cat["ID"] ."'>"  
                       .$cat['Name']. 
                     "</a>
-                    </li>";
-              
-
+                    </li>";    
             }
 
          ?>

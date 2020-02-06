@@ -4,7 +4,7 @@ $(function(){  //document ready code
 
 	//Switch between login and signup
 	$('.login-page h1 span').click(function(){
-
+		
 		$(this).addClass('selected').siblings().removeClass("selected");
 
 		$('.login-page form').hide(); //hide all forms in the page
@@ -24,15 +24,6 @@ $(function(){  //document ready code
 			$(this).attr('placeholder',$(this).attr('data-text'));
 		});
 
-	//Add Asterisk on required filed
-	
-	$('input').each(function(){
-
-		if($(this).attr('required') === 'required'){
-			$(this).after('<span class="asterisk">*</span>');
-		}
-
-	});
 
 	//Convert password field into text field on mousedown
 
@@ -51,6 +42,42 @@ $(function(){  //document ready code
 
 		return confirm('Are you sure ?');
 	});
+
+	//live-name
+	$('.live-name').keyup(function(){
+		$('.live-preview .caption h3').text($(this).val()); 
+	});
+
+
+	//live-desc
+	$('.live-desc').keyup(function(){
+		$('.live-preview .caption p').text($(this).val()); 
+	});
+
+
+	//live-price
+	$('.live-price').keyup(function(){
+		$('.live-preview .price-tag').text($(this).val()); 
+	});
+
+	//live-currency
+	$(".live-currency").change(function () {
+    var selectedOption = $(this).val();
+	if(selectedOption == 0)	selectedOption="";
+	if(selectedOption == "US dollar") selectedOption="$";	
+	
+	$('.live-preview .price-tag').text($('.live-price').val() + " " + selectedOption); 
+	});
 		  
+	
+	//Add Asterisk on required filed
+	
+	$('input').each(function(){
+
+		if($(this).attr('required') === 'required'){
+			$(this).after('<span class="asterisk">*</span>');
+		}
+
+	});		  
 
 });
