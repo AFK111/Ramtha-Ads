@@ -72,6 +72,18 @@ $(function(){  //document ready code
 			$('.cat .full-view').fadeOut(100);
 	});
 
+	
+	//show delete button on child categories
+	$('.child-link').hover(function(){
+
+		$(this).find('.show-delete').fadeIn(500);
+
+	} , function(){
+
+		$(this).find('.show-delete').fadeOut(1000);
+
+	} ) ;	
+
 
 	  
 

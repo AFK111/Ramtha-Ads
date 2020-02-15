@@ -6,11 +6,6 @@
 
  	if(isset($_SESSION['user'])){
 
- 		if(isset($_GET['success']) && $_GET['success']=1){
- 			echo "<div class='container'><div class='alert alert-success text-center'>".
-					lang("ITEM_ADDED") 					
- 				."</div></div>";
- 		}
 
  		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -21,6 +16,7 @@
 			$country =filter_var($_POST['country'] , FILTER_SANITIZE_STRING);
 			$status  =filter_var($_POST['status'] , FILTER_SANITIZE_NUMBER_INT);
 			$category=filter_var($_POST['category'] , FILTER_SANITIZE_NUMBER_INT);
+			$tags    =filter_var($_POST['tags'] , FILTER_SANITIZE_STRING);
 
 			$memberid=$_SESSION['userid'];  //the member who insert the item
 			//Validate the form
@@ -66,8 +62,8 @@
 
 				//Insert into the database that information
 
-				$stmt=$con->prepare("INSERT INTO items(Name , Description , Price , Add_Date, Production_Country ,Status,Currency,Member_ID,Cat_ID) 
-									VALUES(:iname, :idesc , :iprice , now(), :pcountry , :istatus,:currency,:Member_ID,:Cat_ID)");
+				$stmt=$con->prepare("INSERT INTO items(Name , Description , Price , Add_Date, Production_Country ,Status,Currency,Member_ID,Cat_ID,Tags) 
+									VALUES(:iname, :idesc , :iprice , now(), :pcountry , :istatus,:currency,:Member_ID,:Cat_ID,:tags)");
 				$stmt->execute(array(
 					'iname'    => $iname,
 					'idesc'    => $desc,
@@ -76,7 +72,8 @@
 					'istatus'  => $status,
 					'currency' =>$currency,
 					'Member_ID'=>$memberid,
-					'Cat_ID'	=>$category,
+					'Cat_ID'   =>$category,
+					'tags'	   =>$tags,	
 				));
 				if($stmt){
 					header("Location: newad.php?success=1");
@@ -91,9 +88,9 @@
  ?>
 <h1 class="text-center"><?php echo lang("CREATE_NEW_AD"); ?></h1>
 
-<div class="profile"> <!--parent class-->
+<div class=""> <!--parent class-->
 
-<!-- Start info block 1 -->
+<!-- Start block 1 -->
 <div class="create-ad block">
 	<div class="container">
 		<div class="panel panel-primary">
@@ -101,13 +98,24 @@
 			<div class="panel-body">
 				<div class="row">
 					<!-- start Form -->
-					<div class="col-md-8">  
+					<div class="col-md-8"> 
+						<?php 	
+
+					 		if(isset($_GET['success']) && $_GET['success']=1){
+					 			echo "<div class='alert alert-success text-center'>".
+										lang("ITEM_ADDED") 					
+					 				."</div>";
+					 		}
+						 ?>						 
 						<form class="form-horizontal main-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 							<!--Start Name field-->
 							<div class="form-group form-group-lg">
 								<label class="col-sm-3 control-label"><?php echo lang("NAME"); ?></label>
 								<div class="col-sm-10 col-md-6">
+									
 									<input 
+									pattern=".{2,14}"
+									title="2-14 characters"
 									type="text" 
 									name="name" 
 									class="form-control live-name" 
@@ -134,6 +142,8 @@
 								<label class="col-sm-3 control-label"><?php echo lang("DESCRIPTION"); ?></label>
 								<div class="col-sm-10 col-md-6">
 									<input
+									 pattern=".{10,200}"
+									 title="10-200 characters"
 									 type="text" 
 									 name="description" 
 									 class="form-control live-desc" 
@@ -163,7 +173,7 @@
 									 value="<?php echo isset($_SESSION['old_data']['price']) ? $_SESSION['old_data']['price'] : '';   ?>" 
 									 placeholder="<?php echo lang("PLC_HLD_IP"); ?>" 
 									 required="required" />
-									 <select name='currency' class="live-currency">
+									 <select name='currency' class="live-currency" required="required" >
 									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="0")echo "selected"; ?> value="0"; >....</option>
 									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="$")echo "selected";  ?> > <?php echo lang("US_DOLLAR"); ?></option>
 									 	<option <?php if( isset($_SESSION['old_data']['currency'])  && $_SESSION['old_data']['currency']=="JD")echo "selected";  ?> ><?php echo lang("JD"); ?></option>
@@ -231,15 +241,22 @@
 										<option <?php if( isset($_SESSION['old_data']['category'])  && $_SESSION['old_data']['category']=="0")echo "selected";  ?> value="0">.....</option>
 										<?php 
 
-											$stmt=$con->prepare("SELECT * FROM categories");
-											$stmt->execute();
-											$categs=$stmt->fetchAll();
+											$categs=getAll("*", "categories" , "parent=0", "ID" );
 											foreach($categs as $category)
 											{
 												$sel="";
 												if( isset($_SESSION['old_data']['category'])  && $_SESSION['old_data']['category']==$category['ID'] )
 													{$sel="selected";}
 												echo "<option $sel value='".$category['ID']."'>".$category['Name']."</option>";
+												
+												$childCats=getAll("ID,Name","categories","parent={$category['ID']}");
+												foreach($childCats as $child){
+													$sel="";
+													if( isset($_SESSION['old_data']['category'])  && $_SESSION['old_data']['category']==$child['ID'] )
+														{$sel="selected";}	
+
+													echo "<option $sel value='".$child['ID']."'>&nbsp&nbsp&nbsp".$child['Name']."</option>";	
+												}
 											}
 
 										 ?>
@@ -254,6 +271,21 @@
 							</div>
 							<!--End categories field-->
 
+							<!--Start tags field-->
+							<div class="form-group form-group-lg">
+								<label class="col-sm-3 col-xs-8 control-label"><?php echo lang("TAGS"); ?></label>
+								<div class="col-sm-10 col-md-6 col-xs-5">
+									<input
+									 type="text" 
+									 name="tags" 
+									 class="form-control" 
+									 value="<?php echo isset($_SESSION['old_data']['tags']) ? $_SESSION['old_data']['tags'] : '';  unset($_SESSION['old_data']['tags']);  ?>" 
+									 placeholder="<?php echo lang("PLC_HLD_TAGS"); ?>" /> 
+									  
+								</div>
+							</div>
+							<!--End tags field-->							
+	
 
 
 							<!--Start submit field-->
@@ -265,6 +297,7 @@
 							<!--End submit field-->
 
 						</form>
+
 					</div>
 					<!-- End Form -->
 
@@ -308,7 +341,7 @@
 		</div>
 	</div>
 </div>
-<!-- End info block 1 -->
+<!-- End block 1 -->
 
 </div>
 <?php

@@ -37,6 +37,8 @@
 			'REPASSWORD'     	=>'Repassword',
 			'EMAIL'        		=>'Email',
 			'FULL NAME'       	=>'Full name',
+			'USER_IMAGE'		=>'Profile Image',
+			'AVATAR'			=>'Avatar',
 			'SAVE'     	   	   	=>'Save',
 
 			'CURRENT PASSWORD' 	=> 'Current password (mandatory)',
@@ -53,7 +55,10 @@
 			'ERR_REPASS'     	=> 'Repassword must match the password ',
 			'ERR_EMPTY_PASS'    => 'password cannot be empty',
 			'ERR_USER_EXIST'    => 'User name is used ',
-			
+			'ERR_AVATAR_EXT'	=> 'Upload jpeg , jpg , png or gif ',
+			'ERR_AVATAR_EMP'	=> 'You must Upload profile image [jpeg , jpg , png ,gif]',
+			'ERR_AVATAR_SIZE'	=>'At most 4 MB',
+
 			'ADD_MEMBER'        =>'Add member',
 			'INSERT_MEMBER'     =>'Insert member',
 			'MANAGE_MEMBERS'    =>'Manage members',
@@ -95,6 +100,7 @@
 			'PLC_HLD_DC'	   =>'Describe the category',
 			'PLC_HLD_SC'	   =>'Enter number to sort the category with',		
 
+
 			'INSERT_CATEGORY' =>'Insert category',
 			'ERR_CNAME_EMPT'  =>'You can not leave category name empty',
 			'ERR_CEXIST'	  =>'This category is exist',
@@ -111,7 +117,7 @@
 			'EDIT_CATEGORY'     =>'Edit category',
 			'UPDATE_CATEGORY'	=>'Update category',
 			'DELETE_CATEGORY'	=>'Delete category',
-
+			'PARENT'			=>'Parent',
 
 			//items page
 
@@ -122,7 +128,9 @@
 			'PRICE'				=>'Price',
 			'PLC_HLD_IP'		=>'Item price',
 			'COUNTRY'			=>'Country',
+			'TAGS'				=>'Tags',
 			'PLC_HLD_PC'		=>'The country that made the item',
+			'PLC_HLD_TAGS'	    =>"Tag1,Tag2,Tag3...",
 			'STATUS'			=>'Status',
 			'RATING'			=>'Rating',
 			

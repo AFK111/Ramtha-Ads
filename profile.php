@@ -17,7 +17,10 @@
 <div class="information block">
 	<div class="container">
 		<div class="panel panel-primary">
-			<div class="panel-heading">My Information</div>
+			<div class="panel-heading">
+				<?php echo lang("MY_INFO"); ?>
+				<a href="#" class="btn btn-default pull-right"><?php echo lang("EDIT"); ?></a> 
+			</div>
 			<div class="panel-body">
 			<ul class="list-unstyled">	
 				<li>
@@ -48,14 +51,16 @@
 <!-- End info block 1 -->
 
 <!-- Start Ads block 2 -->
-<div class="my-ads block">
+<div id="my-ads" class="my-ads block">
 	<div class="container">
 		<div class="panel panel-primary">
-			<div class="panel-heading">MY ads</div>
+			<div class="panel-heading"><?php echo lang("MY_ITEMS"); ?></div>
 			<div class="panel-body">
 				<div class="row">	
-					<?php 
-					$items=getItems("Member_ID" , $info['UserID'] , 1);  //1 means get all ads even those that are not approved
+					<?php
+					$memberid=$info['UserID'];
+					$items=getAll("*" , "items" ,"Member_ID=$memberid" ,"Item_ID" ,"DESC");
+					//$items=getItems("Member_ID" , $info['UserID'] , 1);  //1 means get all ads even those that are not approved
 					if(!empty($items)){
 
 						foreach($items as $item){
@@ -85,16 +90,14 @@
 <!-- End Ads block 2 -->
 
 <!-- Start comments block 3 -->
-<div class="my-comments block">
+<div id="my-comments" class="my-comments block">
 	<div class="container">
 		<div class="panel panel-primary">
-			<div class="panel-heading">latest Comment</div>
+			<div class="panel-heading"><?php echo lang("MY_COMMENTS"); ?></div>
 			<div class="panel-body">
 			<?php
-				$stmt=$con->prepare("SELECT Comment FROM comments WHERE User_ID = ? ");
-				$stmt->execute(array($info['UserID']));
-				$comments=$stmt->fetchAll();
-
+				
+				$comments=getAll("Comment" , "comments" ,"User_ID=$memberid");
 				if(!empty($comments)){
 					
 					foreach($comments as $comment){

@@ -1,5 +1,31 @@
 <?php 
 	
+	
+
+	/*v2.0	
+	** Function to get all records from any database table
+	*/
+
+	function getAll($field , $tableName , $where=null , $orderBy=null , $AD="DESC" ){
+
+		global $con;
+
+		if($where !== null)
+			$where="WHERE" . " $where";
+		
+		if($orderBy	!== null) 
+			$orderBy="ORDER BY" . " $orderBy $AD"  ;
+
+
+
+		$getAll = $con->prepare("SELECT $field FROM $tableName $where $orderBy");
+		$getAll->execute();
+		$All = $getAll->fetchAll();
+
+		return $All;
+	}
+
+
 	//getTitle function v1.0
 	function getTitle(){
 		global $pageTitle;			// we will take this variable when we include this file and declare before it $pageTitle var

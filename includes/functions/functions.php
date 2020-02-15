@@ -1,38 +1,31 @@
 <?php 
 		
-	/*v1.0	
-	** Function to get categories from database 
-	*/
-
-	function getCat(){
-
-		global $con;
-		
-		$getCat = $con->prepare("SELECT * FROM categories ORDER BY ID ASC");
-		$getCat->execute();
-		$cats = $getCat->fetchAll();
-
-		return $cats;
-	}
 
 
 	/*v2.0	
-	** Function to get Ad items from database 
-	** $approve parameter to determine if you want all items[1] or just approved items[null]
+	** Function to get all records from any database table
 	*/
 
-	function getItems($column , $value , $approve=null){
+	function getAll($field , $tableName , $where=null , $orderBy=null , $AD="DESC" ){
 
 		global $con;
+
+		if($where !== null)
+			$where="WHERE" . " $where";
 		
-		$sql = ($approve==null ? "AND approve = 1" :"" );
+		if($orderBy	!== null) 
+			$orderBy="ORDER BY" . " $orderBy $AD"  ;
 
-		$getItems = $con->prepare("SELECT * FROM items Where $column=? $sql ORDER BY Item_ID,Approve DESC");
-		$getItems->execute(array($value));
-		$items = $getItems->fetchAll();
 
-		return $items;
+
+		$getAll = $con->prepare("SELECT $field FROM $tableName $where $orderBy");
+		$getAll->execute();
+		$All = $getAll->fetchAll();
+
+		return $All;
 	}
+
+
 
 
 	/*v1.0	

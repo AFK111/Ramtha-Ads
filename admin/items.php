@@ -304,9 +304,7 @@ _____________________________
 										<option <?php if( isset($_SESSION['old_data']['member'])  && $_SESSION['old_data']['member']=="0")echo "selected";  ?> value="0">.....</option>
 										<?php 
 
-											$stmt=$con->prepare("SELECT * FROM users WHERE RegStatus=1");
-											$stmt->execute();
-											$users=$stmt->fetchAll();
+											$users=getAll("*","users","RegStatus=1");
 											foreach($users as $user)
 											{
 												$sel="";
@@ -336,15 +334,22 @@ _____________________________
 										<option <?php if( isset($_SESSION['old_data']['category'])  && $_SESSION['old_data']['category']=="0")echo "selected";  ?> value="0">.....</option>
 										<?php 
 
-											$stmt=$con->prepare("SELECT * FROM categories");
-											$stmt->execute();
-											$categs=$stmt->fetchAll();
+											$categs=getAll("*","categories","parent=0", "ID");
 											foreach($categs as $category)
 											{
 												$sel="";
 												if( isset($_SESSION['old_data']['category'])  && $_SESSION['old_data']['category']==$category['ID'] )
 													{$sel="selected";}
 												echo "<option $sel value='".$category['ID']."'>".$category['Name']."</option>";
+												
+												$childCats = getAll("*","categories","parent={$category['ID']}","ID");
+												foreach($childCats as $child){
+													$sel="";
+													if( isset($_SESSION['old_data']['category'])  && $_SESSION['old_data']['category']==$child['ID'] )
+													{$sel="selected";}	
+
+													echo "<option $sel value='".$child['ID']."'>&nbsp&nbsp&nbsp".$child['Name']."</option>";	
+												}
 											}
 
 										 ?>
@@ -358,6 +363,22 @@ _____________________________
 								</div>
 							</div>
 							<!--End categories field-->
+
+
+							<!--Start tags field-->
+							<div class="form-group form-group-lg">
+								<label class="col-sm-2 control-label"><?php echo lang("TAGS"); ?></label>
+								<div class="col-sm-10 col-md-4">
+									<input
+									 type="text" 
+									 name="tags" 
+									 class="form-control" 
+									 value="<?php echo isset($_SESSION['old_data']['tags']) ? $_SESSION['old_data']['tags'] : '';  unset($_SESSION['old_data']['tags']);  ?>" 
+									 placeholder="<?php echo lang("PLC_HLD_TAGS"); ?>" /> 
+									  
+								</div>
+							</div>
+							<!--End tags field-->							
 
 
 
@@ -394,6 +415,7 @@ _____________________________
 					$status  =$_POST['status'];
 					$member  =$_POST['member'];
 					$category=$_POST['category'];
+					$tags    =$_POST['tags'];
 
 
 					//Validate the form
@@ -449,17 +471,18 @@ _____________________________
 
 					//Insert into the database that information
 
-						$stmt=$con->prepare("INSERT INTO items(Name , Description , Price , Add_Date, Production_Country ,Status,Currency,Member_ID,Cat_ID) 
-											VALUES(:iname, :idesc , :iprice , now(), :pcountry , :istatus,:currency,:Member_ID,:Cat_ID)");
+						$stmt=$con->prepare("INSERT INTO items(Name , Description , Price , Add_Date, Production_Country ,Status,Currency,Member_ID,Cat_ID,Tags) 
+											VALUES(:iname, :idesc , :iprice , now(), :pcountry , :istatus,:currency,:Member_ID,:Cat_ID,:ztags)");
 						$stmt->execute(array(
 							'iname'    => $iname,
 							'idesc'    => $desc,
 							'iprice'   => $price,
 							'pcountry' => $country,
 							'istatus'  => $status,
-							'currency' =>$currency,
-							'Member_ID'=>$member,
-							'Cat_ID'	=>$category,
+							'currency' => $currency,
+							'Member_ID'=> $member,
+							'Cat_ID'   => $category,
+							'ztags'	   => $tags,
 						));
 					//unset($_SESSION['old_data']);
 					//print success message
@@ -666,6 +689,20 @@ _____________________________
 								</div>
 								<!--End categories field-->
 
+								<!--Start tags field-->
+								<div class="form-group form-group-lg">
+									<label class="col-sm-2 control-label"><?php echo lang("TAGS"); ?></label>
+									<div class="col-sm-10 col-md-4">
+										<input
+										 type="text" 
+										 name="tags" 
+										 class="form-control" 
+										 value="<?php echo $item['Tags']; ?>"
+										 placeholder="<?php echo lang("PLC_HLD_TAGS"); ?>" /> 
+										  
+									</div>
+								</div>
+								<!--End tags field-->							
 
 
 								<!--Start submit field-->
@@ -716,6 +753,7 @@ _____________________________
 					$status  =$_POST['status'];
 					$member  =$_POST['member'];
 					$category=$_POST['category'];
+					$tags    =$_POST['tags'];
 
 					$itemid=$_POST['itemid'];
 
@@ -760,8 +798,8 @@ _____________________________
 					//Update the database with this information
 
 						$stmt = $con -> prepare("UPDATE items SET Name = ? , Description = ? , Price = ? , Production_Country=? ,Status=?, Currency=?,
-												                  Member_ID=?, Cat_ID=?	 WHERE Item_ID = ?");			
-						$stmt->execute(array($iname ,$desc , $price ,$country ,$status ,$currency ,$member ,$category,$itemid));
+												                  Member_ID=?, Cat_ID=?	, Tags=? WHERE Item_ID = ?");			
+						$stmt->execute(array($iname ,$desc , $price ,$country ,$status ,$currency ,$member ,$category,$tags,$itemid));
 			
 					//print success message
 					$theMsg= "<div class='container'><div class='alert alert-success'>" . $stmt->rowCount() .' '. lang("RECORD_UPDATED") .' </div></div>';

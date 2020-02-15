@@ -39,24 +39,39 @@
 			<ul class="list-unstyled">
 				<li>
 					<i class="fa fa-calendar fa-fw"></i>
-					<span>Added Date :</span><?php echo $item['Add_Date']; ?>
+					<span>Added Date </span> : <?php echo $item['Add_Date']; ?>
 				</li>
 				<li>
 					<i class="fa fa-money"></i>
-					<span>Price :</span><?php echo $item['Price'] ." ". $item['Currency']; ?>
+					<span>Price </span> : <?php echo $item['Price'] ." ". $item['Currency']; ?>
 				</li>
 				<li>
 					<i class="fa fa-home fa-fw"></i>
-					<span>Made In </span><?php echo $item['Production_Country']; ?>
+					<span>Made In </span> : <?php echo $item['Production_Country']; ?>
 				</li>
 				<li>
 					<i class="fa fa-tags fa-fw"></i>
-					<span>Category :</span><a href="categories.php?pageid=<?php echo $item['Cat_ID']; ?>"><?php echo $item['CName'] ?></a>
+					<span>Category </span> : <a href="categories.php?pageid=<?php echo $item['Cat_ID']; ?>"><?php echo $item['CName'] ?></a>
 				</li>
 				<li>
 					<i class="fa fa-user fa-fw"></i>
-					<span>Added By :</span><a href="#"><?php echo $item['UName'] ?></a>
+					<span>Added By </span> : <a href="#"><?php echo $item['UName'] ?></a>
 				</li>
+				<li class="tags-items">
+					<i class="fa fa-user fa-fw"></i>
+					<span>Tags </span> : 
+					<?php 
+						$allTags=explode(",", $item['Tags']);
+						
+						foreach($allTags as $tag){
+							$tag=str_replace(" ", "", $tag);
+							$lowerTag=strtolower($tag);
+							if(!empty($tag))
+								echo "<a href='tags.php?name={$lowerTag}'>". $tag . "</a> ";
+						}
+						
+					 ?>
+				</li>				
 			</ul>
 		</div>
 	</div>
@@ -69,7 +84,7 @@
 				<div class="add-comment">
 					<h3><?php echo lang('ADD_YOUR_COMMENT'); ?></h3>
 					<form action="<?php echo $_SERVER['PHP_SELF'] . '?itemid=' . $item['Item_ID']; ?>" method="POST">
-						<textarea name="comment"></textarea>
+						<textarea name="comment" required></textarea>
 						<input type="submit" class="btn btn-primary"  value="<?php echo lang('ADD_COMMENT'); ?>">
 					</form>
 				<?php 
@@ -130,7 +145,7 @@
 						 <?php echo $comment['UName']; ?>
 						</div> 
 						<div class='col-sm-10'>          <!--  CommentInfo -->
-						  <p class='lead'><?php echo $comment['Comment']; ?> </p>	 
+						  	<p class='lead'><?php echo $comment['Comment']; ?> </p>	 
 						</div>
 					</div>
 				</div>

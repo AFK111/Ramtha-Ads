@@ -17,7 +17,12 @@
 			'REPASSWORD'	=>'Rewrite Password',
 			'EMAIL'			=>'email',
 			'LOGIN_SIGNUP'	=>'Login-Signup',
-			
+			'SETTINGS'		=>'Settings',
+			'ADD_NEW_ITEM'	=>'Add New Item',
+			'MY_ITEMS'		=>'My Items',
+			'MY_COMMENTS'	=>'My Comments',
+
+
 			//categories page
 			'NO_ITEMS'	   => 'There are no items yet',
 			'NO_COMMENTS'  => 'There are no comments yet',
@@ -40,6 +45,10 @@
 			'FAV_CATEGORY'	   =>'Fav Category',
 			'CREATE_NEW_AD'	   =>'Create New Ad',	
 			'NEW_AD'		   =>'New Ad',
+			'MY_INFO'		   =>'My Info',
+			'EDIT'			   =>'Edit',
+			'MY_ITEMS'		   =>'My Items',
+			'MY_COMMENTS'	   =>'My Comments',				
 
 			//newad page
 
@@ -68,12 +77,14 @@
 			'ALMOST_NEW'		  =>'Almost new',
 			'USED'				  =>'Used',
 			'NEED_TO_FIX'		  =>'Need to fix',
+			'TAGS'				  =>'Tags',
 
 
 			'PLC_HLD_IN'		=>'Item name',
 			'PLC_HLD_DI'		=>'Describe the item',
 			'PLC_HLD_IP'		=>'Item price',
 			'PLC_HLD_PC'		=>'The country that made the item',
+			'PLC_HLD_TAGS'		=>'tag1,tag2,tag3...',
 			'ITEM_ADDED'		=>'Item Added Successfully',
 
 			//item page

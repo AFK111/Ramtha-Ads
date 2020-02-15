@@ -377,6 +377,11 @@ div .img-login{
 	margin-top: 2px;
 }
 
+.manage-members img{
+	height: 50px;
+	width: 50px;
+}
+
 .main-table{
 	-webkit-box-shadow: 0 3px 12px #DDD;
 	-moz-box-shadow: 0 3px 12px #DDD;
@@ -464,6 +469,36 @@ div .img-login{
 	margin-right: 5px;
 }
 
+.categories .child-head{
+	margin: 10px 0 10px 5px;
+	font-weight: bold;
+	color: #F8F;
+}
+
+.categories .child-head:before{
+	content: "+";
+}
+
+.categories .child-cats{
+	margin: 0;
+}
+
+
+.categories .child-cats li{
+	margin-left: 20px;
+}
+
+
+.categories .child-cats li:before{
+	content: "- ";
+}
+
+.categories .show-delete{
+	color: #F00;
+	display: none;
+}
+
+
 .categories hr{
 	margin : 0px;
 }
@@ -474,6 +509,8 @@ div .img-login{
 	font-weight: bold;
 	color: #6A6A6A;
 }
+
+
 
 .categories .cat .full-view p{
 	margin-top: 10px;

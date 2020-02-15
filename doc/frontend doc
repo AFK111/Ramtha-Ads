@@ -9,8 +9,8 @@
 
 
 /***********Start functions***********/
--- [getCat function] : this function returns all the categories .
--- [getItems function] : this function returns all the the items in specific category .
+-- [getAll function] : this function will get any thing from any table (instead of select query) .
+ 					=> in this function if you don't want to put any parameter you must send null in its place .
 -- [checkUserStatus function] : this function check if the user is activated or need approval .
 
 
@@ -27,5 +27,8 @@
 
 	$_SESSION['username'] --> for admin
 	$_SESSION['user']     --> for user
+
+
+-- ad = item	
 
 /***********End important notes***********/

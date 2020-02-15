@@ -36,9 +36,10 @@ _____________________________
 				</h1>
 				<div class="container">
 					<div class="table-responsive">
-						<table class="main-table text-center table table-bordered">
+						<table class="main-table manage-members text-center table table-bordered">
 							<tr>
-								<td> <?php echo lang("#ID"); ?> </td>	
+								<td> <?php echo lang("#ID"); ?> </td>
+								<td> <?php echo lang("AVATAR"); ?> </td>	
 								<td><?php echo lang("USER_NAME"); ?></td>
 								<td> <?php echo lang("EMAIL"); ?> </td>
 								<td> <?php echo lang("FULL_NAME"); ?> </td>
@@ -51,6 +52,7 @@ _____________________________
 								foreach($rows as $row){
 									echo "<tr>";
 										echo "<td>" . $row["UserID"] . "</td>";
+										echo "<td><img src='uploads/avatars/" . $row["Avatar"] . "' alt ='User image' /></td>";
 										echo "<td>" . $row["UserName"] . "</td>";
 										echo "<td>" . $row["Email"] . "</td>";
 										echo "<td>" . $row["FullName"] . "</td>";
@@ -79,7 +81,7 @@ _____________________________
 
 						<div class="container">
 							
-							<form class="form-horizontal" action="members.php?do=Insert" method="POST">
+							<form class="form-horizontal" action="members.php?do=Insert" method="POST" enctype="multipart/form-data">
 								<!--Start username field-->
 								<div class="form-group form-group-lg">
 									<label class="col-sm-2 control-label"><?php echo lang("USERNAME"); ?></label>
@@ -160,12 +162,34 @@ _____________________________
 											if(isset($_SESSION['errors']['fullname']))
 												echo "<label style='color:red'> *". $_SESSION['errors']['fullname'] . " </label>" ;
 											unset($_SESSION['errors']['fullname']);
+										
+										 ?>
+									</div>
+								</div>
+								<!--End fullname field-->
+
+								<!--Start avatar field-->
+								<div class="form-group form-group-lg">
+									<label class="col-sm-2 control-label"><?php echo lang("USER_IMAGE"); ?></label>
+									<div class="col-sm-10 col-md-4">
+										<input type="file" name="avatar" value="" class="form-control" required="required" placeholder="">
+										<?php 
+											
+											if(isset($_SESSION['errors']['avatar']))
+												echo "<label style='color:red'> *". $_SESSION['errors']['avatar'] . " </label>" ;
+											unset($_SESSION['errors']['avatar']);
+										
+											if(isset($_SESSION['errors']['avatar_size']))
+												echo "<label style='color:red'> *". $_SESSION['errors']['avatar_size'] . " </label>" ;
+											unset($_SESSION['errors']['avatar_size']);
+
 											unset($_SESSION['errors']);
 											unset($_SESSION['old_data']);
 										 ?>
 									</div>
 								</div>
-								<!--End fullname field-->
+								<!--End avatar field-->	
+
 
 								<!--Start submit field-->
 								<div class="form-group">
@@ -189,6 +213,25 @@ _____________________________
 
 					echo "<h1 class='text-center'>".lang("INSERT_MEMBER"). "</h1>";
 						
+					// Upload variables
+
+					$avatarName=$_FILES['avatar']['name'];
+					$avatarSize=$_FILES['avatar']['size'];
+					$avatarTmp =$_FILES['avatar']['tmp_name'];
+					$avatarType=$_FILES['avatar']['type'];
+					$avatarErr =$_FILES['avatar']['error'];
+
+					//list of allowed file types to upload  (to prevent the user upload any thing except images)
+					
+					$allowedExtension = array("jpeg" , "jpg" , "png" , "gif");
+
+					// Get avatar extension
+					$arr=explode(".",$avatarName);
+					$avatarExtension = end($arr);  //end get the last value in an array
+					$avatarExtension=strtolower($avatarExtension);
+
+
+					//get variables from the form		
 					
 					$user=$_POST['username'];
 					$pass=$_POST['password'];
@@ -204,6 +247,16 @@ _____________________________
 
 
 					$formErorrs=array();
+
+					if(empty($avatarName)){
+						$formErorrs['avatar']=lang('ERR_AVATAR_EMP');
+					}else if( ! in_array($avatarExtension ,$allowedExtension ) ){
+						$formErorrs['avatar']=lang('ERR_AVATAR_EXT');	
+					}
+
+					if( $avatarSize > (4 * 1024 * 1024) ){   //4MB
+						$formErorrs['avatar_size']=lang('ERR_AVATAR_SIZE');	
+					}
 
 					if(strlen($user)<3 || strlen($user)>20){
 						$formErorrs['username']=lang('ERR_USERNAME');
@@ -241,6 +294,7 @@ _____________________________
 					if(count($formErorrs)>0){   //if there is errors in the Edit form
 						$_SESSION['errors']=$formErorrs;
 						//Get the variables from the form to refill it in the form again
+						$_POST['avatar']=$_FILES['avatar'];
 						$_SESSION['old_data']=$_POST;
 
 						header("Location: members.php?do=Add");
@@ -248,17 +302,20 @@ _____________________________
 					}
 
 					
+					$avatar= rand(0,1000000) . '_' . $avatarName;
 
+					move_uploaded_file($avatarTmp, "uploads\avatars\\" . $avatar);
 
 					//Insert into the database that information
 
-						$stmt=$con->prepare("INSERT INTO users(UserName , Password , Email , FullName, GroupID , RegStatus , Date ) 
-											VALUES(:zuser, :zpass , :zmail , :zname, 0 , 1 , now())");
+						$stmt=$con->prepare("INSERT INTO users(UserName , Password , Email , FullName, GroupID , RegStatus , Date , Avatar ) 
+											VALUES(:zuser, :zpass , :zmail , :zname, 0 , 1 , now() , :zavatar)");
 						$stmt->execute(array(
 							':zuser' => $user,
 							':zpass' => $hashpass,
 							':zmail' => $email,
 							':zname' => $name,
+							':zavatar'=>$avatar,
 						));
 					
 					//print success message
@@ -291,16 +348,18 @@ _____________________________
  					$row=$stmt->fetch();
  					$count=$stmt->rowCount();
 
- 					if($count > 0 && $userid){
+ 					if($count > 0 && $userid){ 
 ?>
 				
 						<h1 class="text-center"><?php echo lang("EDIT_MEMBER"); ?></h1>
 
 						<div class="container">
 							
-							<form class="form-horizontal" action="members.php?do=Update" method="POST">
+							<form class="form-horizontal" action="members.php?do=Update" method="POST" enctype="multipart/form-data">
 								<input type="hidden" name="userid" value="<?php echo $userid; ?>"> <!--to pass private data($userid)-->
-								<input type="hidden" name="currentname" value="<?php echo $row['UserName'] ?>"> <!--to pass private data($userName)-->
+								<input type="hidden" name="currentname" value="<?php echo $row['UserName']; ?>"> <!--to pass private data($userName)-->
+								<input type="hidden" name="avatar1" value="<?php echo $row['Avatar']; ?>"> <!--to pass private data($avatar)-->
+								
 								<!--Start username field-->
 								<div class="form-group form-group-lg">
 									<label class="col-sm-2 control-label"><?php echo lang("USERNAME"); ?></label>
@@ -318,21 +377,6 @@ _____________________________
 									</div>
 								</div>
 								<!--End username field-->
-
-
-								<!--Start current password field-->
-								<!-- <div class="form-group form-group-lg">
-									<label class="col-sm-2 control-label"><?php //echo lang("PASSWORD"); ?></label>
-									<div class="col-sm-10 col-md-4">
-										<input type="password" name="currentpass" class="form-control" autocomplete="new-password" placeholder="<?php //echo lang("CURRENT PASSWORD"); ?>" required="required">
-										<?php 
-											//if(isset($_SESSION['wp']))
-											//	echo "<label style='color:red'> ". lang("WPASSWORD") . " </label>" ;
-											//unset($_SESSION['wp']);
-										 ?>
-									</div>
-								</div> -->
-								<!--End current password field-->
 
 
 								<!--Start new password field-->
@@ -378,11 +422,34 @@ _____________________________
 											if(isset($_SESSION['errors']['fullname']))
 												echo "<label style='color:red'> *". $_SESSION['errors']['fullname'] . " </label>" ;
 											unset($_SESSION['errors']['fullname']);
-											unset($_SESSION['errors']);
+											
 										 ?>
 									</div>
 								</div>
 								<!--End fullname field-->
+
+								<!--Start avatar field-->
+								<div class="form-group form-group-lg">
+									<label class="col-sm-2 control-label"><?php echo lang("USER_IMAGE"); ?></label>
+									<div class="col-sm-10 col-md-4">
+										<input type="file" name="avatar" value="" class="form-control"  placeholder="">
+										<?php 
+											
+											if(isset($_SESSION['errors']['avatar']))
+												echo "<label style='color:red'> *". $_SESSION['errors']['avatar'] . " </label>" ;
+											unset($_SESSION['errors']['avatar']);
+										
+											if(isset($_SESSION['errors']['avatar_size']))
+												echo "<label style='color:red'> *". $_SESSION['errors']['avatar_size'] . " </label>" ;
+											unset($_SESSION['errors']['avatar_size']);
+
+											unset($_SESSION['errors']);
+											unset($_SESSION['old_data']);
+										 ?>
+									</div>
+								</div>
+								<!--End avatar field-->	
+
 
 								<!--Start submit field-->
 								<div class="form-group">
@@ -417,16 +484,26 @@ _____________________________
 				if($_SERVER['REQUEST_METHOD'] == 'POST'){  //Check if the user move here when he press on save button in the Edit page
 
 					echo "<h1 class='text-center'>". lang("UPDATE_MEMBER") ."</h1>";
-					//Check if the user Write the current password correct
-					// if($_POST['oldpassword'] != sha1($_POST['currentpass']))
-					// {
-					// 	$_SESSION["wp"]='true';
-					// 	$userid=$_SESSION["ID"];
-					// 	header("Location: members.php?do=Edit&userid=$userid");
-					// 	exit();
-						
-					// }	
 
+					// Upload variables
+					$avatarName="";	
+					if( ! empty($_FILES['avatar']['name']) ){
+						
+						$avatarName=$_FILES['avatar']['name'];
+						$avatarSize=$_FILES['avatar']['size'];
+						$avatarTmp =$_FILES['avatar']['tmp_name'];
+						$avatarType=$_FILES['avatar']['type'];
+						$avatarErr =$_FILES['avatar']['error'];
+
+						//list of allowed file types to upload  (to prevent the user upload any thing except images)
+						
+						$allowedExtension = array("jpeg" , "jpg" , "png" , "gif");
+
+						// Get avatar extension
+						$arr=explode(".",$avatarName);
+						$avatarExtension = end($arr);  //end get the last value in an array
+						$avatarExtension=strtolower($avatarExtension);
+					}	
 
 					//Get the variables from the form
 					$id=$_POST['userid'];
@@ -434,6 +511,7 @@ _____________________________
 					$email=$_POST['email'];
 					$name=$_POST['fullname'];
 					$currentname=$_POST['currentname'];
+					$oldAvatar = $_POST['avatar1'];
 
 
 					//Password Trick
@@ -444,6 +522,19 @@ _____________________________
 
 
 					$formErorrs=array();
+
+					$isNewAvatar=false;
+					if(!empty($avatarName)){						
+						$isNewAvatar=true;
+						if( ! in_array($avatarExtension ,$allowedExtension ) ){
+							$formErorrs['avatar']=lang('ERR_AVATAR_EXT');	
+						}
+
+						if( $avatarSize > (4 * 1024 * 1024) ){   //4MB
+							$formErorrs['avatar_size']=lang('ERR_AVATAR_SIZE');	
+						}
+					}
+					
 
 					if(strlen($user)<3 || strlen($user)>20){
 						$formErorrs['username']=lang('ERR_USERNAME');
@@ -477,15 +568,18 @@ _____________________________
 						exit();
 					}
 					//Update the database with this information
-
+					$avatar=$oldAvatar;
+					if($isNewAvatar){
+						$avatar= rand(0,1000000) . '_' . $avatarName;
+						move_uploaded_file($avatarTmp, "uploads\avatars\\" . $avatar);
+					}
 					
-					$stmt = $con -> prepare("UPDATE users SET UserName = ? , Email = ? , FullName = ? , Password=? WHERE UserID = ?");
-					$stmt->execute( array($user,$email,$name,$pass,$id) );
+					$stmt = $con -> prepare("UPDATE users SET UserName = ? , Email = ? , FullName = ? , Password=? , Avatar = ?WHERE UserID = ?");
+					$stmt->execute( array($user,$email,$name,$pass,$avatar,$id) );
 					//$_SESSION['Username']=$user;
 					//print success message
 					$theMsg= "<div class='container'><div class='alert alert-success'>" . $stmt->rowCount() .' '. lang("RECORD_UPDATED") .' </div></div>';
 					redirectHome($theMsg,"back",4);
-
 
 				}else{   
 					

@@ -31,7 +31,7 @@ _____________________________
 					$based = $_GET['based']; 
 				}				
 
-				$stmt = $con->prepare("SELECT * FROM categories ORDER BY $based $sort");
+				$stmt = $con->prepare("SELECT * FROM categories WHERE Parent=0 ORDER BY $based $sort");
 				$stmt->execute();
 				$categs = $stmt->fetchAll(); ?>
 
@@ -75,8 +75,26 @@ _____________________________
 											if($categ['Visibility'] == 1){echo "<span class='visibility'><i class='fa fa-eye-slash'></i> ".lang("HIDDEN")."</span>";}
 											if($categ['Allow_Comment'] == 1){echo "<span class='commenting'><i class='fa fa-ban'></i> ".lang("NO_COMMENTING")."</span>";}
 											if($categ['Allow_Ads'] == 1){echo "<span class='ads'><i class='fa fa-ban'></i> ".lang("NO_ADS")."</span>";}
+										
+
+											//get child categories
+											$childCats = getAll("*","categories", "parent = {$categ['ID']}" , "ID" ,"ASC"); 
+								           	if(!empty($childCats)){
+								           		echo "<h4 class='child-head'>Child categories</h4>";
+												echo "<ul class='list-unstyled child-cats'>";
+									            foreach($childCats as $c){
+									              echo "<li class='child-link'>
+									              			<a href='?do=Edit&&catid=".$c['ID']."' >".$c['Name'] . "</a>
+									              			<a href='?do=Delete&catid=".$c['ID']."' class='confirm show-delete'>" . lang("DELETE") . "</a>
+									              	    </li>";
+									            }									
+									            echo "</ul>";
+											}										
 										echo "</div>";	
 									echo "</div>";
+									
+
+
 									echo "<hr>";
 								}
 							 ?>	
@@ -148,6 +166,27 @@ _____________________________
 								</div>
 							</div>
 							<!--End Ordering field-->
+
+							<!-- Start Parent field -->
+							<div class="form-group form-group-lg">
+								<label class="col-sm-2 control-label"><?php echo lang("PARENT"); ?></label>
+								<div class="col-sm-10 col-md-4">
+									<select name="parent" class="form-control">
+										<option <?php if( isset($_SESSION['old_data']['parent'])  && $_SESSION['old_data']['parent']=="0")echo "selected";  ?>  value="0">None</option>
+										<?php 
+											$cats=getAll("*","categories","Parent=0","ID","ASC");
+											foreach($cats AS $cat){
+												$sel="";
+												if( isset($_SESSION['old_data']['parent'])  && $_SESSION['old_data']['parent']==$cat['ID'] )
+													{$sel="selected";}
+												echo "<option $sel value='".$cat["ID"]."''>".$cat["Name"]."</option>";
+											}
+										 ?>
+									</select>									
+								</div>
+							</div>
+							<!-- End Parent field -->
+
 
 							<!--Start Visibility field-->
 							<div class="form-group form-group-lg">
@@ -236,6 +275,7 @@ _____________________________
 					
 					$name 	=$_POST['name'];
 					$desc 	=$_POST['description'];
+					$parent =$_POST['parent'];
 					$order 	=$_POST['ordering'];
 					$visible=$_POST['visibility'];
 					$comment=$_POST['commenting'];
@@ -279,11 +319,12 @@ _____________________________
 
 					//Insert into the database that information
 
-						$stmt=$con->prepare("INSERT INTO categories(Name , Description , Ordering , Visibility, Allow_Comment , Allow_Ads) 
-											VALUES(:zname, :zdesc , :zorder , :zvisible, :zcomment , :zads)");
+						$stmt=$con->prepare("INSERT INTO categories(Name , Description , Parent , Ordering , Visibility, Allow_Comment , Allow_Ads) 
+											VALUES(:zname, :zdesc , :zparent , :zorder , :zvisible, :zcomment , :zads)");
 						$stmt->execute(array(
 							':zname' 	=> $name,
 							':zdesc' 	=> $desc,
+							':zparent'	=> $parent,
 							':zorder'	=> $order,
 							':zvisible' => $visible,
 							':zcomment' => $comment,
@@ -378,6 +419,27 @@ _____________________________
 								</div>
 							</div>
 							<!--End Ordering field-->
+
+							<!-- Start Parent field -->
+							<div class="form-group form-group-lg">
+								<label class="col-sm-2 control-label"><?php echo lang("PARENT"); ?></label>
+								<div class="col-sm-10 col-md-4">
+									<select name="parent" class="form-control">
+										<option <?php if($row['Parent']=="0")echo "selected";  ?> value="0">None</option>
+										<?php 
+											$cats=getAll("*","categories","Parent=0","ID","ASC");
+											foreach($cats AS $cat){
+
+												$sel="";
+												if( $row['Parent']==$cat['ID'] )
+													{$sel="selected";}
+												echo "<option $sel value='".$cat["ID"]."''>".$cat["Name"]."</option>";
+											}
+										 ?>
+									</select>									
+								</div>
+							</div>
+							<!-- End Parent field -->
 
 							<!--Start Visibility field-->
 							<div class="form-group form-group-lg">
@@ -475,6 +537,7 @@ _____________________________
 					$id      = $_POST['catid'];
 					$cname   = $_POST['name'];
 					$desc    = $_POST['description'];
+					$parent  = $_POST['parent'];
 					$order   = $_POST['ordering'];
 					$visible = $_POST['visibility'];
 					$comment = $_POST['commenting'];
@@ -512,8 +575,8 @@ _____________________________
 					//Update the database with this information
 
 					
-					$stmt = $con -> prepare("UPDATE categories SET Name = ? , Description = ? , Ordering = ? , Visibility=? , Allow_Comment=? , Allow_Ads=? WHERE ID = ?");
-					$stmt->execute( array($cname,$desc,$order,$visible,$comment,$ads , $id) );
+					$stmt = $con -> prepare("UPDATE categories SET Name = ? , Description = ? ,Parent = ?, Ordering = ? , Visibility=? , Allow_Comment=? , Allow_Ads=? WHERE ID = ?");
+					$stmt->execute( array($cname,$desc,$parent,$order,$visible,$comment,$ads , $id) );
 					
 					//print success message
 					$theMsg= "<div class='container'><div class='alert alert-success'>" . $stmt->rowCount() .' '. lang("RECORD_UPDATED") .' </div></div>';

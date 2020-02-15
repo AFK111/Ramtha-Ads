@@ -20,8 +20,35 @@
 <div class="upper-bar">
   <div class='container'>
     <?php if(isset($_SESSION['user'])){ ?>
-        <span class='pull-right'> <a href="profile.php"> <?php echo $_SESSION['user']; ?> </a>| <a href="logout.php" class="btn btn-danger"><?php echo lang("LOGOUT"); ?></a> </span>
-        <span ><a href="newad.php"> <?php echo lang("NEW_AD"); ?> </a></span>
+         
+         <?php 
+            $userinfo  = getAll("Avatar","users","UserName='{$_SESSION['user']}'");
+            $userImage = empty($userinfo[0]['Avatar']) ? "noImage" : $userinfo[0]['Avatar'] ;
+          ?>
+         <a href="profile.php">
+            <img class="img-thumbnail img-circle avatar" src="admin/uploads/avatars/<?php echo $userImage; ?>" alt="">
+            <span class="uname"><?php echo $_SESSION['user']; ?></span> 
+         </a>
+          
+
+
+        <div class="btn-group pull-right my-info">
+            <span class="btn dropdown-toggle menu-name" data-toggle="dropdown">
+              <i class="fa fa-edit"></i>
+              <span class=""><?php echo lang("SETTINGS"); ?></span>
+              <span class="caret"></span>
+            </span>
+            <ul class="dropdown-menu">
+              <li><a href="profile.php"><?php echo lang("MY_PROFILE"); ?></a></li>
+              <li><a href="newad.php"><?php echo lang("ADD_NEW_ITEM"); ?></a></li>
+              <hr class=hr-upper-bar>
+              <li><a href="profile.php#my-ads"><?php echo lang("MY_ITEMS"); ?></a></li>
+              <li><a href="profile.php#my-comments"><?php echo lang("MY_COMMENTS"); ?></a></li>
+              <hr class=hr-upper-bar>
+              <li><a href="logout.php"><?php echo lang("LOGOUT"); ?></a></li>
+            </ul>
+            
+        </div>
         <?php
             $active= checkUserStatus($_SESSION['user']);   
             if(!$active){
@@ -58,7 +85,7 @@
       <ul class="nav navbar-nav navbar-right">
         <?php 
 
-            foreach(getCat() as $cat){
+            foreach(getAll("*","categories", "parent = 0" , "ID" ,"ASC") as $cat){
               echo "<li>
                     <a href='categories.php?pageid=" . $cat["ID"] ."'>"  
                       .$cat['Name']. 
