@@ -26,7 +26,7 @@
             $userImage = empty($userinfo[0]['Avatar']) ? "noImage" : $userinfo[0]['Avatar'] ;
           ?>
          <a href="profile.php">
-            <img class="img-thumbnail img-circle avatar" src="admin/uploads/avatars/<?php echo $userImage; ?>" alt="">
+            <img class="img-thumbnail  avatar" src="admin/uploads/avatars/<?php echo $userImage; ?>" alt="">
             <span class="uname"><?php echo $_SESSION['user']; ?></span> 
          </a>
           

@@ -113,6 +113,8 @@ h1{
     width: 45px;
     height: 41px;
 
+    border-radius: 20px;
+
 }
 
 .upper-bar .avatar:hover{
