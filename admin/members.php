@@ -75,7 +75,7 @@ _____________________________
 				</div>	
 
 
-<?php       }elseif ($do == "Add"){    //Add memberrs Page ?>
+<?php       }elseif ($do == "Add"){    //Add members Page ?>
 				
 				<h1 class="text-center"><?php echo lang("ADD_NEW_MEMBER"); ?></h1>
 
@@ -267,7 +267,7 @@ _____________________________
 						$formErorrs['fullname'] = lang('ERR_FULLNAME');
 					}
 
-					if(!preg_match("/^[a-zA-Z][a-zA-Z0-9]+@[a-zA_Z]+\.[a-zA_Z]+$/", $email)){
+					if(!preg_match("/^[a-zA-Z][a-zA-Z0-9]+@[a-zA_Z]+\.[a-zA-Z]+$/", $email)){
 						$formErorrs['email'] = lang('ERR_EMAIL');
 					}
 					if(strlen($email)>200){
@@ -552,7 +552,7 @@ _____________________________
 						$formErorrs['email_len'] = lang('ERR_EMAIL_LEN');	
 					}
 
-					if( ($_POST['newpassword'] != "" && strlen($_POST['newpassword'])<5) || strlen($_POST['newpassword'])>300){
+					if( ($_POST['newpassword'] != "" && (strlen($_POST['newpassword'])<5) || strlen($_POST['newpassword'])>300) ){
 						$formErorrs['password'] = lang('ERR_NPASSWORD');
 					}
 
@@ -567,6 +567,7 @@ _____________________________
 						header("Location: members.php?do=Edit&userid=$userid");
 						exit();
 					}
+					
 					//Update the database with this information
 					$avatar=$oldAvatar;
 					if($isNewAvatar){

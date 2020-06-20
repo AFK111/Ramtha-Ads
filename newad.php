@@ -9,6 +9,24 @@
 
  		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+			// Upload variables
+
+			$avatarName=$_FILES['avatar']['name'];
+			$avatarSize=$_FILES['avatar']['size'];
+			$avatarTmp =$_FILES['avatar']['tmp_name'];
+			$avatarType=$_FILES['avatar']['type'];
+			$avatarErr =$_FILES['avatar']['error'];
+
+			//list of allowed file types to upload  (to prevent the user upload any thing except images)
+					
+			$allowedExtension = array("jpeg" , "jpg" , "png" , "gif");
+
+			// Get avatar extension
+			$arr=explode(".",$avatarName);
+			$avatarExtension = end($arr);  //end get the last value in an array
+			$avatarExtension=strtolower($avatarExtension);
+
+
  			$iname	 =filter_var($_POST['name'] , FILTER_SANITIZE_STRING);
 			$desc    =filter_var($_POST['description'] , FILTER_SANITIZE_STRING);
 			$price   =$_POST['price'];
@@ -23,6 +41,16 @@
 
 
 			$formErorrs=array();
+
+			if(empty($avatarName)){
+				$formErorrs['avatar']=lang('ERR_AVATAR_EMP');
+			}else if( ! in_array($avatarExtension ,$allowedExtension ) ){
+				$formErorrs['avatar']="must be [jpeg  , jpg , png , gif]";	
+			}
+
+			if( $avatarSize > (4 * 1024 * 1024) ){   //4MB
+				$formErorrs['avatar_size']="must be less than 4 MB";	
+			}
 
 			//iname validation
 			if( strlen($iname)<2 || strlen($iname)>14 )
@@ -53,18 +81,23 @@
 			if($category==="0")
 				$formErorrs['category'] = lang("ERR_EMP_CATEGORY");						
 
-			//if there is errors in the Edit form
+			//if there are errors in the Edit form
 			if(count($formErorrs)>0){   
 				$_SESSION['errors']=$formErorrs;
 				//Get the variables from the form to refill it in the form again
 				$_SESSION['old_data']=$_POST;
-			}else{ //if there are no error
+			}else{ //if there are no errors
 
 				//Insert into the database that information
 
-				$stmt=$con->prepare("INSERT INTO items(Name , Description , Price , Add_Date, Production_Country ,Status,Currency,Member_ID,Cat_ID,Tags) 
-									VALUES(:iname, :idesc , :iprice , now(), :pcountry , :istatus,:currency,:Member_ID,:Cat_ID,:tags)");
+				$avatar= rand(0,1000000) . '_' . $avatarName;
+
+				move_uploaded_file($avatarTmp, "admin\uploads\adsPhotos\\" . $avatar);
+
+				$stmt=$con->prepare("INSERT INTO items(Approve,Image,Name , Description , Price , Add_Date, Production_Country ,Status,Currency,Member_ID,Cat_ID,Tags) 
+									VALUES(1,:image,:iname, :idesc , :iprice , now(), :pcountry , :istatus,:currency,:Member_ID,:Cat_ID,:tags)");
 				$stmt->execute(array(
+					':image'   => $avatar,
 					'iname'    => $iname,
 					'idesc'    => $desc,
 					'iprice'   => $price,
@@ -107,7 +140,30 @@
 					 				."</div>";
 					 		}
 						 ?>						 
-						<form class="form-horizontal main-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+						<form class="form-horizontal main-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+
+							<!--Start avatar for Ad field-->
+							<div class="form-group form-group-lg">
+								<label class="col-sm-3 control-label">Image</label>
+								<div class="col-sm-10 col-md-6">
+								    <span id="custom-button" class="upload-span"><i class="fa fa-upload"></i> Ad Image</span>
+									<input type="file" name="avatar" id="real-file" class="form-control" required="required" style="display:none;">
+									<?php 
+										
+										if(isset($_SESSION['errors']['avatar']))
+											echo "<label style='color:red' class='signup-upload'> *". $_SESSION['errors']['avatar'] . " </label>" ;
+										unset($_SESSION['errors']['avatar']);
+									
+										if(isset($_SESSION['errors']['avatar_size']))
+											echo "<label style='color:red' class='signup-upload'> *". $_SESSION['errors']['avatar_size'] . " </label>" ;
+										unset($_SESSION['errors']['avatar_size']);
+
+								
+									?>
+								</div>
+							</div>
+							<!--End avatar for Ad field-->	
+							 
 							<!--Start Name field-->
 							<div class="form-group form-group-lg">
 								<label class="col-sm-3 control-label"><?php echo lang("NAME"); ?></label>
@@ -319,7 +375,7 @@
 								
 								
 							</span>
-							<img class='img-responsive' src='layout/images/HiLogo.png' alt='' />	
+							<img class='img-responsive real-time-img' id="real-time-img" src='layout/images/HiLogo.png' required="required" alt='' />	
 							<div class='caption'>
 								<h3>
 								<?php echo isset($_SESSION['old_data']['name']) ? $_SESSION['old_data']['name'] : 'Title';  ?>	
@@ -348,7 +404,38 @@
 }else{    //if(isset($_SESSION['user']))
 	
 	header("Location: login.php");	
-} 
+} ?>
+
+<script>
+//design upload image field
+    const realFileBtn=document.getElementById("real-file");
+	const customBtn  =document.getElementById("custom-button");
+	customBtn.addEventListener("click" , function(){
+		realFileBtn.click();
+	});
+	realFileBtn.addEventListener("change" , function(){
+		
+		if(realFileBtn.value)
+			customBtn.innerHTML = realFileBtn.files[0]['name'];
+		else
+			customBtn.innerHTML = "<i class='fa fa-upload'></i> Profile Image";
+
+
+		const file = realFileBtn.files[0];
+		if(file){ //if there is a selected file
+			const reader = new FileReader();
+
+			reader.addEventListener("load",function(){
+				document.getElementById("real-time-img").setAttribute("src",reader.result);
+			});
+
+			reader.readAsDataURL(file);
+		}
+
+	});
+</script>
+
+<?php
 include $tpl . "footer.php";  //footer file
 ob_end_flush();
  ?>   

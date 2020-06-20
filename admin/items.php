@@ -93,13 +93,15 @@ _____________________________
 				if( isset($_GET['view']) && $_GET['view']=='cards'){
 							
 						echo "<div class='container'>";	
-
-						foreach($items as $item){?>
+						
+						foreach($items as $item){
+							$img = $item['Image'];
+						?>
 
 							<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">		
 								<div class="card" style="width: 28rem; ">
 									<div class="card-header"><?php echo $item['cname']; ?></div>
-								  <img class="card-img-top" src="layout/images/noImage.png" alt="Card image cap">
+								  <img class="card-img-top" style="height:200px;" src="uploads/adsPhotos/<?php echo $img; ?>" alt="Card image cap">
 								  <div class="card-body">
 								    <h3 class="card-title"><?php echo $item['Name']; ?></h3>
 								    <p class="card-text"><?php echo $item['Price'] ." ",$item['Currency']; ?></p>

@@ -37,7 +37,9 @@ _____________________________
 			}elseif($do == "Activate"){  //Activate  page
 
 
-			}
+			}else{
+                //go to dashboard page
+            }
 
 	 	include $tpl . "footer.php";  //footer file 
 	 }

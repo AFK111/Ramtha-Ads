@@ -69,7 +69,8 @@
 							echo "<div class='thumbnail item-box'>";
 								if( $item['Approve'] == 0) {echo "<span class='approve-status'>not approved</span>";}
 								echo "<span class='price-tag'>".$item['Price']." $currency</span>";
-								echo "<img class='img-responsive' src='layout/images/HiLogo.png' alt='' />";	
+								$img = $item['Image'];
+								echo "<img class='img-responsive item-img' src='admin/uploads/adsPhotos/$img' alt='' />";	
 								echo "<div class='caption'>";
 									echo "<h3><a href='item.php?itemid=". $item['Item_ID'] ."'>".$item['Name']."</a></h3>";
 									echo "<p>".$item['Description']."</p>";

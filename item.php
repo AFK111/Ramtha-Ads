@@ -30,7 +30,8 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
-			<img src="layout/images/HiLogo.png" class="img-responsive img-thumbnail center-block" alt=''>	
+			<?php $img=$item['Image']; ?>
+			<img src="admin/uploads/adsPhotos/<?php echo $img;?>" class="img-responsive img-thumbnail center-block item-page-img" alt=''>	
 		</div>
 
 		<div class="col-md-9 item-info">
@@ -98,7 +99,7 @@
 						
 							$stmt = $con->prepare("INSERT INTO
 													 comments(comment , status , add_date , item_id , user_id)
-													 VALUES(:zcomment , 0 ,now() , :zitemid , :zuserid)
+													 VALUES(:zcomment , 1 ,now() , :zitemid , :zuserid)
 												 ");
 							$stmt->execute(array(
 							'zcomment'=> $comment,
@@ -107,7 +108,7 @@
 							));
 							
 							if($stmt)
-								echo "<div class='alert alert-success'>Comment Added</div>";
+								echo "<div class='alert alert-success' style='margin-top:10px;'>Comment Added</div>";
 							
 						}
 
@@ -124,7 +125,7 @@
 
 	<?php
 	    //Select all approved comments for current item
-		$stmt=$con->prepare("SELECT comments.* , users.UserName AS UName
+		$stmt=$con->prepare("SELECT comments.* , users.UserName AS UName , users.Avatar AS UAvatar
 							 FROM comments
 							 INNER JOIN users ON users.UserID=comments.User_ID
 							 WHERE Item_ID = ? AND  Status=1
@@ -141,7 +142,7 @@
 				<div class="comment-box">
 					<div class='row'>
 						<div class='col-sm-2 text-center'>  <!-- UserInfo -->
-						<img src="layout/images/HiLogo.png" class="img-responsive img-thumbnail img-circle center-block" alt />
+						<img src="admin/uploads/avatars/<?php echo $comment['UAvatar']; ?>" class="img-responsive item-page-comment-img img-thumbnail img-circle center-block" alt />
 						 <?php echo $comment['UName']; ?>
 						</div> 
 						<div class='col-sm-10'>          <!--  CommentInfo -->

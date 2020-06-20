@@ -35,13 +35,42 @@
 	 			exit();
 	 		}
 	 	}else{  //signup  
-	 		
+			 
+			// Upload variables
+
+			$avatarName=$_FILES['avatar']['name'];
+			$avatarSize=$_FILES['avatar']['size'];
+			$avatarTmp =$_FILES['avatar']['tmp_name'];
+			$avatarType=$_FILES['avatar']['type'];
+			$avatarErr =$_FILES['avatar']['error'];
+
+
+			//list of allowed file types to upload  (to prevent the user upload any thing except images)
+					
+			$allowedExtension = array("jpeg" , "jpg" , "png" , "gif");
+
+			// Get avatar extension
+			$arr=explode(".",$avatarName);
+			$avatarExtension = end($arr);  //end get the last value in an array
+			$avatarExtension=strtolower($avatarExtension);
+
+
 	 		$username=$_POST['username'];
 	 		$pass1=$_POST['password'];
 	 		$pass2=$_POST['repassword'];
 	 		$email=$_POST['email'];
 
 	 		$formErrors=array();
+
+			 if(empty($avatarName)){
+				$formErrors['avatar']=lang('ERR_AVATAR_EMP');
+			}else if( ! in_array($avatarExtension ,$allowedExtension ) ){
+				$formErrors['avatar']="must be [jpeg  , jpg , png , gif]";	
+			}
+
+			if( $avatarSize > (4 * 1024 * 1024) ){   //4MB
+				$formErrors['avatar_size']="must be less than 4 MB";	
+			}
 
 	 		//filter and validate
 
@@ -90,18 +119,23 @@
 
 	 		}
 
-	 		if(count($formErrors)>0){   //if there is errors in the signup form
+	 		if(count($formErrors)>0){   //if there are errors in the signup form
 				$_SESSION['errors']=$formErrors;
 				//Get the variables from the form to refill it in the form again
 				$_SESSION['old_data']=$_POST;
 			}else{// if no error in user data
 
-				$stmt=$con->prepare("INSERT INTO users(UserName , Password , Email , GroupID , RegStatus , Date ) 
-											VALUES(:zuser, :zpass , :zmail , 0 , 0 , now())");
+				$avatar= rand(0,1000000) . '_' . $avatarName;
+
+				move_uploaded_file($avatarTmp, "admin\uploads\avatars\\" . $avatar);
+
+				$stmt=$con->prepare("INSERT INTO users(UserName , Password , Email , GroupID , RegStatus , Date , Avatar ) 
+											VALUES(:zuser, :zpass , :zmail , 0 , 0 , now() , :zavatar)");
 						$stmt->execute(array(
 							':zuser' => $filterUser,
 							':zpass' => $pass1,
 							':zmail' => $filterEmail,
+							'zavatar'=> $avatar,
 						));
 				$_SESSION['success_reg']=lang("MSG_SUCCESS_REG");	
 				header("Location: login.php");	
@@ -163,7 +197,25 @@
 <!-- End login form -->
 
 <!-- Start singup form -->
-<form class="signup" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" style="<?php if(isset($_POST['signup']))echo 'display: block;'?>">
+<form class="signup" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" style="<?php if(isset($_POST['signup']))echo 'display: block;'?>">
+	
+	<!--Start avatar field-->
+
+		 	<span id="custom-button" class="upload-span"><i class="fa fa-upload"></i> Profile Image</span>
+			<input type="file" name="avatar" id="real-file" class="form-control" required="required" placeholder="" style="display:none;">
+			<?php 
+				
+				if(isset($_SESSION['errors']['avatar']))
+					echo "<label style='color:red'> *". $_SESSION['errors']['avatar'] . " </label>" ;
+				unset($_SESSION['errors']['avatar']);
+			
+				if(isset($_SESSION['errors']['avatar_size']))
+					echo "<label style='color:red'> *". $_SESSION['errors']['avatar_size'] . " </label>" ;
+				unset($_SESSION['errors']['avatar_size']);
+			?>
+
+	<!--End avatar field-->			 
+	
 	<!-- Start username field -->
 	<input
 	 pattern=".{3,20}"
@@ -245,8 +297,8 @@
 			echo "<label style='color:red'> *". $_SESSION['errors']['email'] . " </label>" ;
 		unset($_SESSION['errors']['email']);
 
-	 	unset($_SESSION['errors']);
-	 	unset($_SESSION['old_data']);
+		unset($_SESSION['errors']);
+		unset($_SESSION['old_data']);
 	 ?>
 	<!-- End email field -->
 
@@ -274,6 +326,21 @@
 
 </div>
 
+<script>
+//design upload image field
+    const realFileBtn=document.getElementById("real-file");
+	const customBtn  =document.getElementById("custom-button");
+	customBtn.addEventListener("click" , function(){
+		realFileBtn.click();
+	});
+	realFileBtn.addEventListener("change" , function(){
+		if(realFileBtn.value){
+			customBtn.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+		}
+		else
+		customBtn.innerHTML = "<i class='fa fa-upload'></i> Profile Image";
+	});
+</script>
 
 
 <?php include $tpl .'footer.php';  ob_end_flush(); ?>
