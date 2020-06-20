@@ -26,6 +26,22 @@
 	}
 
 
+	/*v1.0	
+	** Function to get number of users
+	*/
+
+	function countUsers(){
+
+		global $con;
+
+
+		$getAll = $con->prepare("SELECT UserName FROM users");
+		$getAll->execute();
+		$All = $getAll->rowCount();
+
+		return $All;
+	}
+
 
 
 	/*v1.0	
@@ -38,7 +54,7 @@
 
  		$stmt = $con->prepare("SELECT username , RegStatus FROM users WHERE username=? AND RegStatus=1"); 
  		$stmt->execute(array($user));
- 		$status=$stmt->rowCount();
+ 		$status=$stmt->rowsCount();
 
  		return $status;
 
