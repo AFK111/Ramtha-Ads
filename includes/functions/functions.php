@@ -54,7 +54,7 @@
 
  		$stmt = $con->prepare("SELECT username , RegStatus FROM users WHERE username=? AND RegStatus=1"); 
  		$stmt->execute(array($user));
- 		$status=$stmt->rowsCount();
+ 		$status=$stmt->rowCount();
 
  		return $status;
 
