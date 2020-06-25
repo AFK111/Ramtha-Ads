@@ -16,7 +16,8 @@
 				echo "<div class='col-md-3 col-sm-6'>";
 					echo "<div class='thumbnail item-box'>";
 						echo "<span class='price-tag'>".$item['Price']." $currency</span>";
-						echo "<img class='img-responsive' src='layout/images/HiLogo.png' alt='' />";	
+						$img = $item['Image'];
+						echo "<img class='img-responsive item-img' src='admin/uploads/adsPhotos/$img' alt='' />";	
 						echo "<div class='caption'>";
 							//echo "<h3>".$item['Name']."</h3>";
 							echo "<h3><a href='item.php?itemid=". $item['Item_ID'] ."'>".$item['Name']."</a></h3>";
