@@ -1,8 +1,10 @@
 <?php 
+	$dbName = DB_NAME;
+	$host = DB_HOST;
 
-	$dsn="mysql:host=localhost;dbname=shop";
-	$user = 'root';
-	$pass='';
+	$dsn="mysql:host=$host;dbname=$dbName";
+	$user = DB_USERNAME;
+	$pass=DB_PASS;
 	$option=array(
 		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 	);
