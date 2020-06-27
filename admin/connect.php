@@ -1,10 +1,10 @@
 <?php 
-	$dbName = DB_NAME;
-	$host = DB_HOST;
+	$dbName = getenv('DB_NAME');
+	$host = getenv('DB_HOST');
 
 	$dsn="mysql:host=$host;dbname=$dbName";
-	$user = DB_USERNAME;
-	$pass=DB_PASS;
+	$user = getenv('DB_USERNAME');
+	$pass=getenv('DB_PASS1');
 	$option=array(
 		PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
 	);
