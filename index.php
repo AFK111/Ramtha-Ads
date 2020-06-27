@@ -76,7 +76,7 @@
         <div class="container1">
             <div class="grid-2">
                 <div class="center">
-                    <img src="layout/images/HiLogo.png" alt="">
+                    <img src="layout/images/HiLogo.png" style="width: 354px;margin-top: -100px" alt="">
                 </div>
                 <div>
                     <h3>About Us</h3>
