@@ -39,7 +39,7 @@
     <!-- Start Header -->
     <header class="showcase">
         <div class="content">
-            <img src="layout/images/logo.png" class="logo" alt="RamthaFC">
+            <img src="layout/images/HiLogo.png" class="logo" alt="RamthaFC">
             <div class="title">Welcom To Ramtha Ads</div>
             <div class="text">You can put advertisement freely to Ramtha's people </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="container1">
             <div class="grid-2">
                 <div class="center">
-                    <img src="layout/images/logo.png" alt="">
+                    <img src="layout/images/HiLogo.png" alt="">
                 </div>
                 <div>
                     <h3>About Us</h3>
