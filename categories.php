@@ -6,7 +6,9 @@
 			<?php 
 			if(isset($_GET['pageid']) && is_numeric($_GET['pageid'])){
 				$pageid=$_GET['pageid'];
-				$items=getAll("*","items","Approve=1 AND Cat_ID=$pageid","Item_ID");
+				if($pageid == 13) $pageid = 'IN (2,3,8,9,13)';
+				else $pageid = '= ' . $pageid; 
+				$items=getAll("*","items","Approve=1 AND Cat_ID $pageid","Item_ID");
 				//$items=getItems("Cat_ID",$_GET['pageid']); // get just approved Ads
 				if(!empty($items)){
 
