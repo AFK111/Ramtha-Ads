@@ -2,16 +2,16 @@
 
 
 	//local DB
-	$dbName = 'shop';
-	$host = 'localhost';
-	$user = 'root';
-	$pass='';
+	// $dbName = 'shop';
+	// $host = 'localhost';
+	// $user = 'root';
+	// $pass='';
 
 	//Remote DB
-	// $dbName = getenv('DB_NAME');
-	// $host = getenv('DB_HOST');
-	// $user = getenv('DB_USERNAME');
-	// $pass=getenv('DB_PASS');
+	$dbName = getenv('DB_NAME');
+	$host = getenv('DB_HOST');
+	$user = getenv('DB_USERNAME');
+	$pass=getenv('DB_PASS');
 
 	$dsn="mysql:host=$host;dbname=$dbName";
 	$option=array(
