@@ -191,7 +191,7 @@
 	 name="login" 
 	 />
 	<!-- End submit field -->
-
+	<a href="admin">Admin Login 🤭</a>
 </form>
 
 <!-- End login form -->
